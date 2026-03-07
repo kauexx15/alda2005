@@ -1,506 +1,675 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Sala ALDA 2005 💛</title>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
-  <style>
-    :root {
-      --gold: #f5c842;
-      --deep: #1a1a2e;
-      --mid: #16213e;
-      --accent: #e94560;
-      --cream: #fdf6e3;
-      --soft: #f0e6c8;
-    }
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Turma 2005 · Escola ALDA</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=Quicksand:wght@400;500;600;700&family=Caveat:wght@500&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --bg:#0d0a1a;
+  --bg2:#120e22;
+  --card:#1a1430;
+  --card2:#1f1838;
+  --border:rgba(139,92,246,.18);
+  --purple:#7c3aed;
+  --purple2:#6d28d9;
+  --purple3:#4c1d95;
+  --glow:#8b5cf6;
+  --accent:#a78bfa;
+  --bright:#c4b5fd;
+  --white:#f5f3ff;
+  --muted:rgba(196,181,253,.45);
+  --shadow:rgba(109,40,217,.25);
+}
 
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
 
-    html { scroll-behavior: smooth; }
+body{
+  background:var(--bg);
+  font-family:'Quicksand',sans-serif;
+  color:var(--white);
+  min-height:100vh;
+  overflow-x:hidden;
+}
 
-    body {
-      background-color: var(--deep);
-      color: var(--cream);
-      font-family: 'DM Sans', sans-serif;
-      overflow-x: hidden;
-    }
+/* ── PARTICLES ── */
+#particles{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden;}
+.particle{
+  position:absolute;
+  border-radius:50%;
+  background:var(--glow);
+  opacity:0;
+  animation:drift var(--d) ease-in-out infinite;
+  animation-delay:var(--delay);
+}
+@keyframes drift{
+  0%{transform:translateY(100vh) translateX(0) scale(0);opacity:0;}
+  10%{opacity:var(--op);}
+  90%{opacity:var(--op);}
+  100%{transform:translateY(-10vh) translateX(var(--tx)) scale(1);opacity:0;}
+}
 
-    /* ── STARFIELD ── */
-    #stars {
-      position: fixed; inset: 0;
-      pointer-events: none; z-index: 0;
-      overflow: hidden;
-    }
-    .star {
-      position: absolute;
-      background: white;
-      border-radius: 50%;
-      animation: twinkle var(--dur) ease-in-out infinite alternate;
-    }
-    @keyframes twinkle { from { opacity: .2; } to { opacity: 1; } }
+/* ── AURORA ── */
+.aurora{
+  position:fixed;inset:0;pointer-events:none;z-index:0;
+  background:
+    radial-gradient(ellipse 80% 50% at 20% 10%, rgba(109,40,217,.18) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 40% at 80% 80%, rgba(76,29,149,.2) 0%, transparent 55%),
+    radial-gradient(ellipse 50% 60% at 60% 40%, rgba(139,92,246,.08) 0%, transparent 50%);
+  animation:aurora 10s ease-in-out infinite alternate;
+}
+@keyframes aurora{
+  0%{opacity:.8;transform:scale(1) rotate(0deg);}
+  50%{opacity:1;transform:scale(1.05) rotate(1deg);}
+  100%{opacity:.7;transform:scale(0.98) rotate(-1deg);}
+}
 
-    /* ── HERO ── */
-    header {
-      position: relative; z-index: 1;
-      min-height: 100vh;
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center;
-      text-align: center;
-      padding: 2rem;
-    }
+/* ── GRID LINES ── */
+.grid-lines{
+  position:fixed;inset:0;pointer-events:none;z-index:0;
+  background-image:
+    linear-gradient(rgba(139,92,246,.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(139,92,246,.04) 1px, transparent 1px);
+  background-size:48px 48px;
+}
 
-    .badge {
-      display: inline-block;
-      border: 1.5px solid var(--gold);
-      color: var(--gold);
-      font-size: .75rem;
-      letter-spacing: .2em;
-      text-transform: uppercase;
-      padding: .35rem 1.1rem;
-      border-radius: 99px;
-      margin-bottom: 1.8rem;
-      animation: fadeDown .8s ease both;
-    }
+/* ── NAV ── */
+nav{
+  position:sticky;top:0;z-index:200;
+  background:rgba(13,10,26,.8);
+  backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border);
+  padding:0 6%;
+  height:60px;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.nav-logo{
+  font-family:'Playfair Display',serif;
+  font-size:1.2rem;font-weight:700;
+  color:var(--bright);
+  letter-spacing:.03em;
+  display:flex;align-items:center;gap:.5rem;
+}
+.nav-logo .dot{
+  width:8px;height:8px;border-radius:50%;
+  background:var(--glow);
+  box-shadow:0 0 10px var(--glow);
+  animation:pulse-dot 2s ease-in-out infinite;
+}
+@keyframes pulse-dot{0%,100%{box-shadow:0 0 6px var(--glow);}50%{box-shadow:0 0 18px var(--glow),0 0 30px rgba(139,92,246,.4);}}
+.nav-links a{
+  text-decoration:none;
+  font-size:.78rem;font-weight:700;
+  color:var(--muted);
+  padding:.35rem .9rem;border-radius:99px;
+  margin-left:.2rem;
+  letter-spacing:.06em;text-transform:uppercase;
+  transition:color .2s,background .2s;
+  border:1px solid transparent;
+}
+.nav-links a:hover{color:var(--bright);border-color:var(--border);background:rgba(139,92,246,.1);}
 
-    h1 {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(3.5rem, 11vw, 8.5rem);
-      line-height: 1;
-      color: var(--gold);
-      text-shadow: 0 0 60px rgba(245,200,66,.35);
-      animation: fadeDown .9s .1s ease both;
-    }
-    h1 em {
-      font-style: italic;
-      color: var(--cream);
-      display: block;
-      font-size: .55em;
-    }
+/* ── HERO ── */
+.hero{
+  position:relative;z-index:1;
+  padding:7rem 6% 8rem;
+  display:flex;flex-direction:column;
+  align-items:flex-start;
+  overflow:hidden;
+}
 
-    .sub {
-      margin-top: 1.2rem;
-      font-size: 1.1rem;
-      font-weight: 300;
-      color: rgba(253,246,227,.65);
-      letter-spacing: .05em;
-      animation: fadeDown .9s .2s ease both;
-    }
+.hero-tag{
+  display:inline-flex;align-items:center;gap:.5rem;
+  border:1px solid rgba(139,92,246,.35);
+  background:rgba(139,92,246,.08);
+  color:var(--accent);
+  font-size:.72rem;font-weight:700;
+  letter-spacing:.16em;text-transform:uppercase;
+  padding:.38rem 1rem;border-radius:99px;
+  margin-bottom:2rem;
+  animation:fadeSlideDown .7s ease both;
+}
+.hero-tag .blink{
+  width:6px;height:6px;border-radius:50%;
+  background:var(--accent);
+  animation:blink 1.4s ease-in-out infinite;
+}
+@keyframes blink{0%,100%{opacity:1;}50%{opacity:.2;}}
 
-    .scroll-hint {
-      position: absolute; bottom: 2.5rem;
-      display: flex; flex-direction: column; align-items: center;
-      gap: .4rem; color: rgba(255,255,255,.3);
-      font-size: .7rem; letter-spacing: .15em; text-transform: uppercase;
-      animation: fadeDown 1s .6s ease both;
-    }
-    .scroll-hint span { width: 1px; height: 50px; background: linear-gradient(to bottom, rgba(245,200,66,.6), transparent); }
+.hero h1{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(3.5rem,11vw,8rem);
+  line-height:.95;
+  color:var(--white);
+  animation:fadeSlideDown .8s .1s ease both;
+  position:relative;
+}
+.hero h1 span{
+  display:block;
+  color:transparent;
+  -webkit-text-stroke:1.5px rgba(167,139,250,.5);
+}
+.hero h1 em{
+  font-style:italic;
+  background:linear-gradient(135deg, var(--accent), var(--bright));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  display:block;font-size:.75em;
+}
 
-    @keyframes fadeDown {
-      from { opacity: 0; transform: translateY(-22px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
+.hero-sub{
+  font-family:'Caveat',cursive;
+  font-size:1.4rem;
+  color:var(--muted);
+  margin-top:1.5rem;
+  animation:fadeSlideDown .8s .2s ease both;
+}
 
-    /* ── DIVIDER ── */
-    .divider {
-      position: relative; z-index: 1;
-      display: flex; align-items: center; gap: 1rem;
-      padding: 0 8%;
-      margin: 2rem 0;
-    }
-    .divider::before, .divider::after {
-      content: ''; flex: 1;
-      height: 1px;
-      background: linear-gradient(to right, transparent, var(--gold), transparent);
-    }
-    .divider-icon { color: var(--gold); font-size: 1.2rem; }
+/* big glowing book */
+.hero-book{
+  position:absolute;right:5%;top:50%;transform:translateY(-50%);
+  font-size:14rem;
+  opacity:.06;
+  pointer-events:none;
+  animation:float-book 6s ease-in-out infinite;
+  user-select:none;
+}
+@keyframes float-book{
+  0%,100%{transform:translateY(-48%) rotate(-3deg);}
+  50%{transform:translateY(-52%) rotate(3deg);}
+}
 
-    /* ── SECTIONS ── */
-    section {
-      position: relative; z-index: 1;
-      padding: 5rem 8%;
-    }
+/* glow orb behind title */
+.hero-orb{
+  position:absolute;
+  width:500px;height:500px;border-radius:50%;
+  background:radial-gradient(circle, rgba(109,40,217,.25) 0%, transparent 70%);
+  left:-100px;top:-100px;
+  pointer-events:none;
+  animation:orb 8s ease-in-out infinite alternate;
+}
+@keyframes orb{from{transform:translate(0,0) scale(1);}to{transform:translate(60px,40px) scale(1.1);}}
 
-    .section-title {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(2rem, 5vw, 3.5rem);
-      color: var(--gold);
-      margin-bottom: 2.5rem;
-      position: relative;
-      display: inline-block;
-    }
-    .section-title::after {
-      content: '';
-      display: block;
-      width: 50%;
-      height: 3px;
-      background: var(--accent);
-      margin-top: .5rem;
-      border-radius: 2px;
-    }
+@keyframes fadeSlideDown{
+  from{opacity:0;transform:translateY(-20px);}
+  to{opacity:1;transform:translateY(0);}
+}
 
-    /* ── ABOUT ── */
-    .about-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 3rem;
-      align-items: center;
-    }
-    @media (max-width: 720px) { .about-grid { grid-template-columns: 1fr; } }
+/* ── SCROLL INDICATOR ── */
+.scroll-cue{
+  position:absolute;bottom:2.5rem;left:50%;transform:translateX(-50%);
+  display:flex;flex-direction:column;align-items:center;gap:.4rem;
+  color:var(--muted);font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;
+  animation:fadeSlideDown 1s .6s ease both;
+}
+.scroll-line{
+  width:1px;height:44px;
+  background:linear-gradient(to bottom,var(--accent),transparent);
+  animation:scroll-line 2s ease-in-out infinite;
+}
+@keyframes scroll-line{0%,100%{opacity:.3;transform:scaleY(1);}50%{opacity:1;transform:scaleY(1.2);}}
 
-    .about-text p {
-      line-height: 1.85;
-      color: rgba(253,246,227,.8);
-      font-size: 1.05rem;
-      margin-bottom: 1rem;
-    }
-    .about-text strong { color: var(--gold); }
+/* ── DIVIDER ── */
+.divider{
+  position:relative;z-index:1;
+  display:flex;align-items:center;
+  padding:0 6%;margin:0 0 2.5rem;
+}
+.divider-line{flex:1;height:1px;background:linear-gradient(to right,transparent,var(--border),transparent);}
+.divider-label{
+  font-size:.7rem;font-weight:700;
+  color:var(--muted);letter-spacing:.14em;text-transform:uppercase;
+  padding:0 1rem;white-space:nowrap;
+}
 
-    .year-card {
-      background: linear-gradient(135deg, rgba(245,200,66,.12), rgba(233,69,96,.08));
-      border: 1px solid rgba(245,200,66,.25);
-      border-radius: 1.5rem;
-      padding: 2.5rem;
-      text-align: center;
-      box-shadow: 0 0 60px rgba(245,200,66,.06);
-    }
-    .year-card .big-year {
-      font-family: 'Playfair Display', serif;
-      font-size: 5rem;
-      color: var(--gold);
-      line-height: 1;
-      text-shadow: 0 0 40px rgba(245,200,66,.4);
-    }
-    .year-card p { margin-top: .8rem; color: rgba(253,246,227,.6); font-size: .95rem; }
+/* ── MAIN ── */
+main{position:relative;z-index:1;max-width:1060px;margin:0 auto;padding:1rem 5% 6rem;}
 
-    /* ── MEMORIES GRID ── */
-    .memories-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-      gap: 1.5rem;
-    }
-    .memory-card {
-      background: linear-gradient(135deg, rgba(22,33,62,.9), rgba(26,26,46,.95));
-      border: 1px solid rgba(245,200,66,.18);
-      border-radius: 1.2rem;
-      padding: 1.8rem;
-      transition: transform .3s, box-shadow .3s, border-color .3s;
-      cursor: default;
-    }
-    .memory-card:hover {
-      transform: translateY(-6px);
-      border-color: rgba(245,200,66,.5);
-      box-shadow: 0 20px 50px rgba(0,0,0,.4), 0 0 30px rgba(245,200,66,.08);
-    }
-    .memory-card .emoji { font-size: 2rem; margin-bottom: .8rem; display: block; }
-    .memory-card h3 {
-      font-family: 'Playfair Display', serif;
-      color: var(--cream);
-      font-size: 1.1rem;
-      margin-bottom: .5rem;
-    }
-    .memory-card p { color: rgba(253,246,227,.6); font-size: .9rem; line-height: 1.65; }
+/* ── COMPOSE ── */
+.compose{
+  background:var(--card);
+  border-radius:20px;
+  padding:1.8rem;
+  margin-bottom:2.5rem;
+  border:1px solid var(--border);
+  position:relative;overflow:hidden;
+  box-shadow:0 8px 32px rgba(0,0,0,.4), 0 0 0 1px rgba(139,92,246,.05);
+  transition:border-color .3s,box-shadow .3s;
+}
+.compose:focus-within{
+  border-color:rgba(139,92,246,.4);
+  box-shadow:0 8px 40px rgba(0,0,0,.5), 0 0 30px rgba(109,40,217,.12);
+}
+.compose::before{
+  content:'';
+  position:absolute;top:0;left:0;right:0;height:3px;
+  background:linear-gradient(90deg,var(--purple3),var(--glow),var(--bright));
+}
+.compose-hint{
+  font-family:'Caveat',cursive;
+  font-size:1.2rem;color:var(--accent);margin-bottom:1rem;
+}
+.field{
+  width:100%;
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(139,92,246,.2);
+  border-radius:12px;
+  padding:.7rem 1rem;
+  font-family:'Quicksand',sans-serif;
+  font-size:.91rem;color:var(--white);
+  outline:none;
+  transition:border-color .2s,box-shadow .2s,background .2s;
+  margin-bottom:.7rem;resize:none;
+}
+.field:focus{
+  border-color:rgba(139,92,246,.5);
+  background:rgba(139,92,246,.07);
+  box-shadow:0 0 0 3px rgba(109,40,217,.15);
+}
+.field::placeholder{color:rgba(196,181,253,.25);}
+textarea.field{height:85px;}
 
-    /* ── QUOTE ── */
-    .quote-section {
-      background: linear-gradient(135deg, rgba(233,69,96,.08), rgba(245,200,66,.06));
-      border-left: 4px solid var(--gold);
-      padding: 3rem 4rem;
-      border-radius: 0 1.5rem 1.5rem 0;
-      margin: 1rem 0;
-    }
-    .quote-section blockquote {
-      font-family: 'Playfair Display', serif;
-      font-style: italic;
-      font-size: clamp(1.3rem, 3vw, 2rem);
-      color: var(--cream);
-      line-height: 1.55;
-    }
-    .quote-section cite {
-      display: block;
-      margin-top: 1rem;
-      color: var(--gold);
-      font-style: normal;
-      font-size: .9rem;
-      letter-spacing: .1em;
-    }
+.compose-row{display:flex;align-items:center;gap:.7rem;flex-wrap:wrap;}
+.upload-btn{
+  display:inline-flex;align-items:center;gap:.4rem;
+  background:rgba(139,92,246,.1);
+  border:1px solid rgba(139,92,246,.25);
+  border-radius:99px;
+  padding:.46rem .95rem;
+  cursor:pointer;font-size:.78rem;font-weight:700;color:var(--accent);
+  transition:background .2s,border-color .2s;
+}
+.upload-btn:hover{background:rgba(139,92,246,.2);border-color:rgba(139,92,246,.5);}
+.upload-btn input{display:none;}
+#thumbs{display:flex;gap:.4rem;flex-wrap:wrap;}
+.thumb{
+  width:44px;height:44px;border-radius:8px;
+  object-fit:cover;border:1.5px solid rgba(139,92,246,.3);
+}
+.btn-pub{
+  margin-left:auto;
+  background:linear-gradient(135deg,var(--purple2),var(--glow));
+  color:white;border:none;border-radius:99px;
+  padding:.6rem 1.65rem;
+  font-family:'Quicksand',sans-serif;
+  font-size:.87rem;font-weight:700;
+  cursor:pointer;letter-spacing:.04em;
+  box-shadow:0 4px 20px rgba(109,40,217,.4);
+  transition:transform .2s,box-shadow .2s,opacity .2s;
+  position:relative;overflow:hidden;
+}
+.btn-pub::after{
+  content:'';
+  position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(255,255,255,.15),transparent);
+  opacity:0;transition:opacity .2s;
+}
+.btn-pub:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(109,40,217,.55);}
+.btn-pub:hover::after{opacity:1;}
 
-    /* ── TIMELINE ── */
-    .timeline {
-      position: relative;
-      padding-left: 2.5rem;
-      border-left: 2px solid rgba(245,200,66,.25);
-    }
-    .tl-item {
-      position: relative;
-      margin-bottom: 2.5rem;
-    }
-    .tl-item::before {
-      content: '';
-      position: absolute;
-      left: -2.7rem;
-      top: .35rem;
-      width: 12px; height: 12px;
-      background: var(--gold);
-      border-radius: 50%;
-      box-shadow: 0 0 12px rgba(245,200,66,.6);
-    }
-    .tl-item .tl-year {
-      font-size: .75rem;
-      color: var(--gold);
-      letter-spacing: .12em;
-      text-transform: uppercase;
-      margin-bottom: .3rem;
-    }
-    .tl-item h4 {
-      color: var(--cream);
-      font-size: 1.05rem;
-      margin-bottom: .35rem;
-    }
-    .tl-item p { color: rgba(253,246,227,.6); font-size: .9rem; line-height: 1.6; }
+/* ── MASONRY ── */
+#feed{columns:3 270px;column-gap:1.15rem;}
 
-    /* ── NAMES CLOUD ── */
-    .names-cloud {
-      display: flex; flex-wrap: wrap;
-      gap: .75rem;
-      justify-content: center;
-    }
-    .name-chip {
-      background: rgba(245,200,66,.1);
-      border: 1px solid rgba(245,200,66,.25);
-      color: var(--gold);
-      padding: .45rem 1.1rem;
-      border-radius: 99px;
-      font-size: .88rem;
-      letter-spacing: .04em;
-      transition: background .25s, transform .25s;
-      cursor: default;
-    }
-    .name-chip:hover {
-      background: rgba(245,200,66,.22);
-      transform: scale(1.07);
-    }
+/* ── CARD ── */
+.card{
+  break-inside:avoid;
+  background:var(--card);
+  border-radius:18px;
+  overflow:hidden;
+  margin-bottom:1.15rem;
+  border:1px solid var(--border);
+  box-shadow:0 4px 24px rgba(0,0,0,.35);
+  transition:transform .35s cubic-bezier(.34,1.56,.64,1), box-shadow .35s, border-color .35s;
+  animation:cardIn .5s ease both;
+  position:relative;
+}
+@keyframes cardIn{
+  from{opacity:0;transform:translateY(22px);}
+  to{opacity:1;transform:translateY(0);}
+}
+.card::after{
+  content:'';
+  position:absolute;inset:0;border-radius:18px;
+  background:radial-gradient(circle at var(--mx,50%) var(--my,50%), rgba(139,92,246,.08) 0%, transparent 60%);
+  opacity:0;transition:opacity .3s;pointer-events:none;
+}
+.card:hover{
+  transform:translateY(-6px) scale(1.01);
+  box-shadow:0 16px 48px rgba(0,0,0,.5), 0 0 0 1px rgba(139,92,246,.25);
+  border-color:rgba(139,92,246,.35);
+}
+.card:hover::after{opacity:1;}
 
-    /* ── FOOTER ── */
-    footer {
-      position: relative; z-index: 1;
-      text-align: center;
-      padding: 3rem 2rem 4rem;
-      border-top: 1px solid rgba(245,200,66,.12);
-      color: rgba(253,246,227,.35);
-      font-size: .85rem;
-    }
-    footer strong { color: var(--gold); }
+.card-stripe{height:3px;background:linear-gradient(90deg,var(--purple3),var(--glow),var(--bright));}
+.card-img-wrap{overflow:hidden;position:relative;}
+.card-img{width:100%;max-height:260px;object-fit:cover;display:block;cursor:zoom-in;transition:transform .5s;}
+.card:hover .card-img{transform:scale(1.06);}
+.more-badge{
+  position:absolute;bottom:.5rem;right:.5rem;
+  background:rgba(13,10,26,.75);color:var(--bright);
+  font-size:.66rem;font-weight:700;
+  padding:.18rem .5rem;border-radius:99px;
+  border:1px solid var(--border);backdrop-filter:blur(6px);
+}
+.card-body{padding:.95rem 1.05rem 1.1rem;}
+.card-meta{display:flex;align-items:center;gap:.5rem;margin-bottom:.55rem;}
+.avatar{
+  width:30px;height:30px;border-radius:50%;
+  background:linear-gradient(135deg,var(--purple2),var(--accent));
+  display:flex;align-items:center;justify-content:center;
+  font-size:.63rem;font-weight:700;color:white;flex-shrink:0;
+  box-shadow:0 0 10px rgba(109,40,217,.4);
+}
+.card-author{font-weight:700;font-size:.84rem;color:var(--white);}
+.card-date{font-family:'Caveat',cursive;font-size:.93rem;color:var(--muted);margin-left:auto;}
+.card-text{font-size:.89rem;line-height:1.68;color:rgba(196,181,253,.75);}
+.strip{display:flex;gap:.3rem;margin-top:.6rem;overflow-x:auto;}
+.strip img{height:50px;border-radius:7px;object-fit:cover;flex-shrink:0;cursor:zoom-in;border:1px solid var(--border);}
+.card-foot{display:flex;align-items:center;justify-content:space-between;margin-top:.7rem;}
+.chip{
+  font-size:.67rem;font-weight:700;letter-spacing:.05em;
+  background:rgba(139,92,246,.12);color:var(--accent);
+  padding:.2rem .58rem;border-radius:99px;
+  border:1px solid rgba(139,92,246,.2);
+}
+.del{
+  background:none;border:none;cursor:pointer;
+  font-size:.72rem;color:rgba(196,181,253,.2);
+  transition:color .2s;padding:.1rem .3rem;border-radius:6px;
+}
+.del:hover{color:#f87171;background:rgba(248,113,113,.08);}
 
-    /* ── FLOATING HEARTS ── */
-    .heart-float {
-      position: fixed;
-      pointer-events: none; z-index: 0;
-      font-size: 1.2rem;
-      opacity: .08;
-      animation: floatUp linear infinite;
-    }
-    @keyframes floatUp {
-      from { transform: translateY(100vh) rotate(0deg); opacity: .12; }
-      to   { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
-    }
-  </style>
+/* ── EMPTY ── */
+#empty{
+  column-span:all;
+  text-align:center;padding:5rem 2rem;
+  color:rgba(196,181,253,.25);
+}
+#empty .ico{font-size:4rem;margin-bottom:1rem;filter:grayscale(1) opacity(.3);}
+#empty p{font-family:'Caveat',cursive;font-size:1.3rem;}
+
+/* ── LIGHTBOX ── */
+#lb{
+  display:none;position:fixed;inset:0;z-index:999;
+  background:rgba(5,3,12,.92);backdrop-filter:blur(16px);
+  align-items:center;justify-content:center;cursor:zoom-out;
+}
+#lb.on{display:flex;}
+#lb img{
+  max-width:92vw;max-height:88vh;
+  border-radius:14px;
+  box-shadow:0 0 100px rgba(109,40,217,.35), 0 0 0 1px rgba(139,92,246,.2);
+  object-fit:contain;
+  animation:lbIn .25s ease;
+}
+@keyframes lbIn{from{opacity:0;transform:scale(.95);}to{opacity:1;transform:scale(1);}}
+#lb-x{
+  position:absolute;top:1.2rem;right:1.5rem;
+  font-size:1.8rem;color:rgba(196,181,253,.4);cursor:pointer;
+  transition:color .2s;line-height:1;
+}
+#lb-x:hover{color:var(--bright);}
+
+/* ── SOBRE ── */
+.sobre{
+  position:relative;z-index:1;
+  background:var(--bg2);
+  border-top:1px solid var(--border);
+  padding:4.5rem 8%;text-align:center;
+  overflow:hidden;
+}
+.sobre::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse 80% 60% at 50% 50%, rgba(76,29,149,.15) 0%, transparent 70%);
+}
+.sobre h2{
+  font-family:'Playfair Display',serif;
+  font-size:2rem;color:var(--bright);
+  margin-bottom:.8rem;position:relative;
+}
+.sobre p{
+  color:var(--muted);line-height:1.8;
+  max-width:480px;margin:0 auto;font-size:.95rem;position:relative;
+}
+
+/* ── FOOTER ── */
+footer{
+  position:relative;z-index:1;
+  background:var(--bg);
+  border-top:1px solid var(--border);
+  padding:2rem 5%;text-align:center;
+  color:rgba(196,181,253,.2);font-size:.8rem;
+}
+footer strong{color:rgba(196,181,253,.5);}
+
+@media(max-width:600px){
+  .nav-links{display:none;}
+  #feed{columns:1;}
+  .compose-row{flex-direction:column;align-items:stretch;}
+  .btn-pub{margin-left:0;}
+  .hero-book{display:none;}
+}
+</style>
 </head>
 <body>
 
-<!-- Stars background -->
-<div id="stars"></div>
+<!-- BG LAYERS -->
+<div id="particles"></div>
+<div class="aurora"></div>
+<div class="grid-lines"></div>
 
-<!-- Floating hearts -->
-<div class="heart-float" style="left:10%;animation-duration:12s;animation-delay:0s">💛</div>
-<div class="heart-float" style="left:30%;animation-duration:15s;animation-delay:3s">⭐</div>
-<div class="heart-float" style="left:55%;animation-duration:11s;animation-delay:1s">💛</div>
-<div class="heart-float" style="left:75%;animation-duration:14s;animation-delay:5s">✨</div>
-<div class="heart-float" style="left:90%;animation-duration:10s;animation-delay:2s">💫</div>
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">
+    <div class="dot"></div>
+    Escola ALDA
+  </div>
+  <div class="nav-links">
+    <a href="#blog">Blog</a>
+    <a href="#sobre">Sobre</a>
+  </div>
+</nav>
 
-<!-- ── HERO ── -->
-<header>
-  <div class="badge">✦ Turma Especial ✦</div>
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-orb"></div>
+  <div class="hero-tag"><span class="blink"></span>Escola ALDA · Turma 2005</div>
   <h1>
-    Sala ALDA
-    <em>Turma 2005</em>
+    Nosso
+    <span>Diário</span>
+    <em>da Turma</em>
   </h1>
-  <p class="sub">Uma turma, uma história, memórias para sempre 💛</p>
-  <div class="scroll-hint">
-    <span></span>
+  <p class="hero-sub">Poste fotos, conte histórias, guarde memórias.</p>
+  <div class="hero-book">📚</div>
+  <div class="scroll-cue">
+    <div class="scroll-line"></div>
     scroll
   </div>
-</header>
+</div>
 
-<div class="divider"><span class="divider-icon">✦</span></div>
+<!-- MAIN -->
+<main id="blog">
 
-<!-- ── SOBRE ── -->
-<section>
-  <h2 class="section-title">Sobre a Turma</h2>
-  <div class="about-grid">
-    <div class="about-text">
-      <p>A <strong>Sala ALDA de 2005</strong> é mais do que uma turma — é uma família formada entre carteiras, recreios, risadas e aprendizados que vão muito além dos livros.</p>
-      <p>Cada rosto nessa sala carregou uma história única, e juntos escrevemos um capítulo inesquecível. Professores que marcaram, amizades que duraram, e momentos que o tempo não apaga.</p>
-      <p>Esta página é o nosso espaço: para lembrar, celebrar e manter vivo o espírito da turma mais incrível de todos os tempos.</p>
-    </div>
-    <div class="year-card">
-      <div class="big-year">2005</div>
-      <p>O ano em que tudo começou ✨<br/>Sala ALDA para sempre!</p>
+  <div class="divider">
+    <div class="divider-line"></div>
+    <div class="divider-label">Novo post</div>
+    <div class="divider-line"></div>
+  </div>
+
+  <div class="compose">
+    <p class="compose-hint">O que rolou hoje?</p>
+    <input class="field" id="f-author" type="text" placeholder="Seu nome" maxlength="40"/>
+    <textarea class="field" id="f-text" placeholder="Conta pra turma..."></textarea>
+    <div class="compose-row">
+      <label class="upload-btn">
+        Adicionar fotos
+        <input id="f-photos" type="file" accept="image/*" multiple/>
+      </label>
+      <div id="thumbs"></div>
+      <button class="btn-pub" onclick="addPost()">Publicar</button>
     </div>
   </div>
-</section>
 
-<div class="divider"><span class="divider-icon">★</span></div>
-
-<!-- ── MEMÓRIAS ── -->
-<section>
-  <h2 class="section-title">Memórias da Turma</h2>
-  <div class="memories-grid">
-    <div class="memory-card">
-      <span class="emoji">📚</span>
-      <h3>As Aulas</h3>
-      <p>Aquelas aulas que pareciam durar horas, mas que hoje a gente daria qualquer coisa para reviver mais uma vez.</p>
-    </div>
-    <div class="memory-card">
-      <span class="emoji">🎉</span>
-      <h3>As Festas</h3>
-      <p>Festas juninas, formaturas, comemorações... cada evento era uma desculpa para a turma se unir e criar mais memórias.</p>
-    </div>
-    <div class="memory-card">
-      <span class="emoji">😂</span>
-      <h3>As Risadas</h3>
-      <p>As piadas internas, os apelidos, as situações que só fazem sentido pra quem estava lá. Nenhuma legenda necessária.</p>
-    </div>
-    <div class="memory-card">
-      <span class="emoji">🤝</span>
-      <h3>As Amizades</h3>
-      <p>Amizades construídas entre trabalhos em grupo e intervalos que duram até hoje — e vão durar pra sempre.</p>
-    </div>
-    <div class="memory-card">
-      <span class="emoji">🏆</span>
-      <h3>As Conquistas</h3>
-      <p>Cada nota, cada projeto, cada superação. A turma ALDA sempre deu o seu melhor e colheu frutos lindos.</p>
-    </div>
-    <div class="memory-card">
-      <span class="emoji">🌟</span>
-      <h3>Os Momentos</h3>
-      <p>Aqueles instantes que ficaram gravados na memória: o cheiro da escola, a voz dos professores, os corredores cheios de vida.</p>
-    </div>
+  <div class="divider">
+    <div class="divider-line"></div>
+    <div class="divider-label">Memórias da turma</div>
+    <div class="divider-line"></div>
   </div>
-</section>
 
-<div class="divider"><span class="divider-icon">✦</span></div>
+  <div id="feed"></div>
+</main>
 
-<!-- ── FRASE ── -->
-<section>
-  <div class="quote-section">
-    <blockquote>
-      "A turma perfeita não existe — mas a nossa chegou bem perto disso."
-    </blockquote>
-    <cite>— Sala ALDA, 2005</cite>
-  </div>
-</section>
+<div class="sobre" id="sobre">
+  <h2>Escola ALDA</h2>
+  <p>Este é o blog da Turma 2005 — um espaço pra guardar memórias, postar fotos do dia a dia e manter todo mundo conectado.</p>
+</div>
 
-<div class="divider"><span class="divider-icon">★</span></div>
-
-<!-- ── LINHA DO TEMPO ── -->
-<section>
-  <h2 class="section-title">Nossa Linha do Tempo</h2>
-  <div class="timeline">
-    <div class="tl-item">
-      <div class="tl-year">2005 — Início</div>
-      <h4>🚀 Primeiros Passos</h4>
-      <p>O começo de tudo. Rostos novos, nervosismo, e a sensação de que algo especial estava para começar.</p>
-    </div>
-    <div class="tl-item">
-      <div class="tl-year">Durante o ano</div>
-      <h4>📖 Crescimento e Aprendizado</h4>
-      <p>Meses de estudo, descobertas, amizades que foram se aprofundando e uma identidade de turma que foi tomando forma.</p>
-    </div>
-    <div class="tl-item">
-      <div class="tl-year">Final do Ano</div>
-      <h4>🎓 Formatura e Celebração</h4>
-      <p>O encerramento de um ciclo inesquecível. Lágrimas, abraços, fotos e a promessa de nunca esquecer uns aos outros.</p>
-    </div>
-    <div class="tl-item">
-      <div class="tl-year">Para Sempre</div>
-      <h4>💛 ALDA 2005 Eterna</h4>
-      <p>A turma pode ter se separado, mas a essência do que vivemos juntos permanece. Sala ALDA vive em cada um de nós.</p>
-    </div>
-  </div>
-</section>
-
-<div class="divider"><span class="divider-icon">✦</span></div>
-
-<!-- ── NOMES ── -->
-<section style="text-align:center;">
-  <h2 class="section-title" style="display:block;text-align:center;">Nossa Turma 💛</h2>
-  <p style="color:rgba(253,246,227,.55);margin-bottom:2rem;font-size:.95rem;">Adicione os nomes da galera aqui!</p>
-  <div class="names-cloud">
-    <span class="name-chip">Ana</span>
-    <span class="name-chip">Bruno</span>
-    <span class="name-chip">Carla</span>
-    <span class="name-chip">Diego</span>
-    <span class="name-chip">Elena</span>
-    <span class="name-chip">Felipe</span>
-    <span class="name-chip">Gabriela</span>
-    <span class="name-chip">Hugo</span>
-    <span class="name-chip">Isabela</span>
-    <span class="name-chip">João</span>
-    <span class="name-chip">Karen</span>
-    <span class="name-chip">Lucas</span>
-    <span class="name-chip">Marina</span>
-    <span class="name-chip">Nicolas</span>
-    <span class="name-chip">Olivia</span>
-    <span class="name-chip">Paulo</span>
-    <span class="name-chip">Rafaela</span>
-    <span class="name-chip">Samuel</span>
-    <span class="name-chip">Tatiana</span>
-    <span class="name-chip">Vitor</span>
-    <span class="name-chip">+ Toda a Turma ✨</span>
-  </div>
-</section>
-
-<!-- ── FOOTER ── -->
 <footer>
-  <p>Feito com 💛 para a <strong>Sala ALDA 2005</strong></p>
-  <p style="margin-top:.5rem">Uma turma inesquecível · Para sempre no coração</p>
+  Feito com carinho para a <strong>Turma 2005 · Escola ALDA</strong>
 </footer>
 
+<div id="lb" onclick="closeLb()">
+  <span id="lb-x">✕</span>
+  <img id="lb-img" src="" alt=""/>
+</div>
+
 <script>
-  // Generate starfield
-  const starsEl = document.getElementById('stars');
-  for (let i = 0; i < 180; i++) {
-    const s = document.createElement('div');
-    s.className = 'star';
-    const size = Math.random() * 2.5 + .5;
-    s.style.cssText = `
-      width:${size}px; height:${size}px;
-      top:${Math.random()*100}%;
-      left:${Math.random()*100}%;
-      --dur:${(Math.random()*3+1.5).toFixed(1)}s;
-      animation-delay:${(Math.random()*4).toFixed(1)}s;
-    `;
-    starsEl.appendChild(s);
-  }
+/* PARTICLES */
+const pc = document.getElementById('particles');
+for(let i=0;i<55;i++){
+  const p=document.createElement('div');
+  p.className='particle';
+  const size=Math.random()*3+1;
+  p.style.cssText=`
+    width:${size}px;height:${size}px;
+    left:${Math.random()*100}%;
+    --d:${(Math.random()*18+10).toFixed(1)}s;
+    --delay:${(Math.random()*15).toFixed(1)}s;
+    --tx:${(Math.random()*120-60).toFixed(0)}px;
+    --op:${(Math.random()*.4+.1).toFixed(2)};
+  `;
+  pc.appendChild(p);
+}
 
-  // Intersection observer for scroll animations
-  const cards = document.querySelectorAll('.memory-card, .tl-item, .year-card');
-  const io = new IntersectionObserver((entries) => {
-    entries.forEach(e => {
-      if (e.isIntersecting) {
-        e.target.style.opacity = '1';
-        e.target.style.transform = 'translateY(0)';
-      }
-    });
-  }, { threshold: .15 });
+/* CARD MOUSE GLOW */
+document.addEventListener('mousemove',e=>{
+  document.querySelectorAll('.card').forEach(card=>{
+    const r=card.getBoundingClientRect();
+    const x=((e.clientX-r.left)/r.width*100).toFixed(1);
+    const y=((e.clientY-r.top)/r.height*100).toFixed(1);
+    card.style.setProperty('--mx',x+'%');
+    card.style.setProperty('--my',y+'%');
+  });
+});
 
-  cards.forEach(c => {
-    c.style.opacity = '0';
-    c.style.transform = 'translateY(28px)';
-    c.style.transition = 'opacity .6s ease, transform .6s ease';
+/* SCROLL REVEAL */
+const io=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      e.target.style.opacity='1';
+      e.target.style.transform='translateY(0)';
+    }
+  });
+},{threshold:.12});
+
+function observeCards(){
+  document.querySelectorAll('.card').forEach((c,i)=>{
+    c.style.opacity='0';
+    c.style.transform='translateY(20px)';
+    c.style.transition=`opacity .5s ${i*.07}s ease, transform .5s ${i*.07}s ease`;
     io.observe(c);
   });
+}
+
+/* BLOG LOGIC */
+let pending=[];
+
+document.getElementById('f-photos').addEventListener('change',function(){
+  pending=[];
+  document.getElementById('thumbs').innerHTML='';
+  Array.from(this.files).forEach(f=>{
+    const r=new FileReader();
+    r.onload=e=>{
+      pending.push(e.target.result);
+      const img=document.createElement('img');
+      img.src=e.target.result;img.className='thumb';
+      document.getElementById('thumbs').appendChild(img);
+    };
+    r.readAsDataURL(f);
+  });
+});
+
+function addPost(){
+  const author=document.getElementById('f-author').value.trim()||'Anônimo';
+  const text=document.getElementById('f-text').value.trim();
+  if(!text&&!pending.length){document.getElementById('f-text').focus();return;}
+  const posts=load();
+  posts.unshift({id:Date.now(),author,text,photos:[...pending],
+    date:new Date().toLocaleDateString('pt-BR',{day:'2-digit',month:'short',year:'numeric'})});
+  save(posts);render(posts);
+  document.getElementById('f-author').value='';
+  document.getElementById('f-text').value='';
+  document.getElementById('f-photos').value='';
+  document.getElementById('thumbs').innerHTML='';
+  pending=[];
+}
+
+function render(posts){
+  const feed=document.getElementById('feed');
+  feed.innerHTML='';
+  if(!posts.length){
+    feed.innerHTML='<div id="empty"><div class="ico">📚</div><p>Nenhum post ainda — seja o primeiro a compartilhar!</p></div>';
+    return;
+  }
+  posts.forEach((p,i)=>{
+    const init=p.author.split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase();
+    const card=document.createElement('div');
+    card.className='card';
+
+    let imgHtml='';
+    if(p.photos&&p.photos.length){
+      imgHtml=`<div class="card-img-wrap">
+        <img class="card-img" src="${p.photos[0]}" onclick="openLb('${p.photos[0]}')" alt="foto"/>
+        ${p.photos.length>1?`<span class="more-badge">+${p.photos.length-1} fotos</span>`:''}
+      </div>`;
+    }
+    const extra=p.photos&&p.photos.length>1
+      ?`<div class="strip">${p.photos.slice(1).map(s=>`<img src="${s}" onclick="openLb('${s}')" />`).join('')}</div>`:'';
+
+    card.innerHTML=`
+      <div class="card-stripe"></div>
+      ${imgHtml}
+      <div class="card-body">
+        <div class="card-meta">
+          <div class="avatar">${init}</div>
+          <span class="card-author">${esc(p.author)}</span>
+          <span class="card-date">${p.date}</span>
+        </div>
+        ${p.text?`<p class="card-text">${esc(p.text)}</p>`:''}
+        ${extra}
+        <div class="card-foot">
+          <span class="chip">#turma2005</span>
+          <button class="del" onclick="delPost(${p.id})">apagar</button>
+        </div>
+      </div>`;
+    feed.appendChild(card);
+  });
+  observeCards();
+}
+
+function delPost(id){
+  if(!confirm('Apagar esse post?'))return;
+  save(load().filter(p=>p.id!==id));render(load());
+}
+function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+function save(d){try{localStorage.setItem('alda2005_v4',JSON.stringify(d));}catch(e){}}
+function load(){try{return JSON.parse(localStorage.getItem('alda2005_v4')||'[]');}catch(e){return[];}}
+function openLb(src){document.getElementById('lb-img').src=src;document.getElementById('lb').classList.add('on');}
+function closeLb(){document.getElementById('lb').classList.remove('on');}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeLb();});
+
+render(load());
 </script>
 </body>
 </html>
