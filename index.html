@@ -1,28 +1,112 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-br">
 <head>
-<title>Turma Alda 2005</title>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Turma Alda 2005</title>
+
+<style>
+
+body{
+    margin:0;
+    font-family: Arial, Helvetica, sans-serif;
+    background: linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+    color:white;
+    text-align:center;
+}
+
+header{
+    padding:60px 20px;
+}
+
+h1{
+    font-size:50px;
+    margin:0;
+}
+
+p{
+    font-size:20px;
+    opacity:0.8;
+}
+
+.container{
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:30px;
+    padding:40px;
+}
+
+.card{
+    background:rgba(255,255,255,0.1);
+    backdrop-filter:blur(10px);
+    padding:30px;
+    border-radius:15px;
+    width:250px;
+    transition:0.3s;
+    box-shadow:0 10px 25px rgba(0,0,0,0.3);
+}
+
+.card:hover{
+    transform:scale(1.08);
+}
+
+button{
+    margin-top:15px;
+    padding:10px 20px;
+    border:none;
+    border-radius:8px;
+    background:#00c6ff;
+    color:white;
+    font-size:16px;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#0072ff;
+}
+
+footer{
+    margin-top:40px;
+    padding:20px;
+    opacity:0.6;
+}
+
+</style>
 </head>
 
-<body style="font-family: Arial; text-align:center; background:#111; color:white;">
+<body>
 
-<h1>Turma Alda 2005</h1>
+<header>
+<h1>Turma Alda 2005 🎓</h1>
+<p>Site oficial da turma</p>
+</header>
 
-<p>Site oficial da nossa turma.</p>
+<div class="container">
 
+<div class="card">
+<h2>Galeria</h2>
+<p>Fotos da turma.</p>
+<button onclick="alert('Em breve!')">Abrir</button>
+</div>
+
+<div class="card">
 <h2>Alunos</h2>
-<ul>
-<li>Kaue</li>
-<li>Nome 2</li>
-<li>Nome 3</li>
-</ul>
+<p>Lista da galera.</p>
+<button onclick="alert('Em breve!')">Ver lista</button>
+</div>
 
-<h2>Fotos</h2>
-<p>Em breve...</p>
+<div class="card">
+<h2>Eventos</h2>
+<p>Eventos da turma.</p>
+<button onclick="alert('Em breve!')">Ver eventos</button>
+</div>
 
-<h2>Contato</h2>
-<p>Instagram da turma</p>
+</div>
+
+<footer>
+<p>© 2026 Turma Alda 2005</p>
+</footer>
 
 </body>
 </html>
