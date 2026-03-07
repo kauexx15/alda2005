@@ -1,159 +1,506 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<title>Turma Alda 2005</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sala ALDA 2005 💛</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --gold: #f5c842;
+      --deep: #1a1a2e;
+      --mid: #16213e;
+      --accent: #e94560;
+      --cream: #fdf6e3;
+      --soft: #f0e6c8;
+    }
 
-<style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-body{
-margin:0;
-font-family:Arial;
-background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
-color:white;
-text-align:center;
-}
+    html { scroll-behavior: smooth; }
 
-header{
-padding:60px;
-}
+    body {
+      background-color: var(--deep);
+      color: var(--cream);
+      font-family: 'DM Sans', sans-serif;
+      overflow-x: hidden;
+    }
 
-h1{
-font-size:50px;
-margin:0;
-}
+    /* ── STARFIELD ── */
+    #stars {
+      position: fixed; inset: 0;
+      pointer-events: none; z-index: 0;
+      overflow: hidden;
+    }
+    .star {
+      position: absolute;
+      background: white;
+      border-radius: 50%;
+      animation: twinkle var(--dur) ease-in-out infinite alternate;
+    }
+    @keyframes twinkle { from { opacity: .2; } to { opacity: 1; } }
 
-p{
-opacity:0.8;
-}
+    /* ── HERO ── */
+    header {
+      position: relative; z-index: 1;
+      min-height: 100vh;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      text-align: center;
+      padding: 2rem;
+    }
 
-.container{
-max-width:700px;
-margin:auto;
-padding:20px;
-}
+    .badge {
+      display: inline-block;
+      border: 1.5px solid var(--gold);
+      color: var(--gold);
+      font-size: .75rem;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      padding: .35rem 1.1rem;
+      border-radius: 99px;
+      margin-bottom: 1.8rem;
+      animation: fadeDown .8s ease both;
+    }
 
-.card{
-background:rgba(255,255,255,0.08);
-padding:25px;
-border-radius:15px;
-margin-top:20px;
-backdrop-filter:blur(10px);
-}
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(3.5rem, 11vw, 8.5rem);
+      line-height: 1;
+      color: var(--gold);
+      text-shadow: 0 0 60px rgba(245,200,66,.35);
+      animation: fadeDown .9s .1s ease both;
+    }
+    h1 em {
+      font-style: italic;
+      color: var(--cream);
+      display: block;
+      font-size: .55em;
+    }
 
-input{
-width:90%;
-padding:12px;
-margin:8px;
-border:none;
-border-radius:8px;
-outline:none;
-}
+    .sub {
+      margin-top: 1.2rem;
+      font-size: 1.1rem;
+      font-weight: 300;
+      color: rgba(253,246,227,.65);
+      letter-spacing: .05em;
+      animation: fadeDown .9s .2s ease both;
+    }
 
-button{
-padding:12px 20px;
-border:none;
-border-radius:8px;
-background:#00c6ff;
-color:white;
-font-size:16px;
-cursor:pointer;
-}
+    .scroll-hint {
+      position: absolute; bottom: 2.5rem;
+      display: flex; flex-direction: column; align-items: center;
+      gap: .4rem; color: rgba(255,255,255,.3);
+      font-size: .7rem; letter-spacing: .15em; text-transform: uppercase;
+      animation: fadeDown 1s .6s ease both;
+    }
+    .scroll-hint span { width: 1px; height: 50px; background: linear-gradient(to bottom, rgba(245,200,66,.6), transparent); }
 
-button:hover{
-background:#0072ff;
-}
+    @keyframes fadeDown {
+      from { opacity: 0; transform: translateY(-22px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
 
-.mensagem{
-background:rgba(255,255,255,0.1);
-padding:10px;
-border-radius:10px;
-margin-top:10px;
-}
+    /* ── DIVIDER ── */
+    .divider {
+      position: relative; z-index: 1;
+      display: flex; align-items: center; gap: 1rem;
+      padding: 0 8%;
+      margin: 2rem 0;
+    }
+    .divider::before, .divider::after {
+      content: ''; flex: 1;
+      height: 1px;
+      background: linear-gradient(to right, transparent, var(--gold), transparent);
+    }
+    .divider-icon { color: var(--gold); font-size: 1.2rem; }
 
-footer{
-margin-top:50px;
-opacity:0.6;
-}
+    /* ── SECTIONS ── */
+    section {
+      position: relative; z-index: 1;
+      padding: 5rem 8%;
+    }
 
-</style>
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      color: var(--gold);
+      margin-bottom: 2.5rem;
+      position: relative;
+      display: inline-block;
+    }
+    .section-title::after {
+      content: '';
+      display: block;
+      width: 50%;
+      height: 3px;
+      background: var(--accent);
+      margin-top: .5rem;
+      border-radius: 2px;
+    }
+
+    /* ── ABOUT ── */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: center;
+    }
+    @media (max-width: 720px) { .about-grid { grid-template-columns: 1fr; } }
+
+    .about-text p {
+      line-height: 1.85;
+      color: rgba(253,246,227,.8);
+      font-size: 1.05rem;
+      margin-bottom: 1rem;
+    }
+    .about-text strong { color: var(--gold); }
+
+    .year-card {
+      background: linear-gradient(135deg, rgba(245,200,66,.12), rgba(233,69,96,.08));
+      border: 1px solid rgba(245,200,66,.25);
+      border-radius: 1.5rem;
+      padding: 2.5rem;
+      text-align: center;
+      box-shadow: 0 0 60px rgba(245,200,66,.06);
+    }
+    .year-card .big-year {
+      font-family: 'Playfair Display', serif;
+      font-size: 5rem;
+      color: var(--gold);
+      line-height: 1;
+      text-shadow: 0 0 40px rgba(245,200,66,.4);
+    }
+    .year-card p { margin-top: .8rem; color: rgba(253,246,227,.6); font-size: .95rem; }
+
+    /* ── MEMORIES GRID ── */
+    .memories-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 1.5rem;
+    }
+    .memory-card {
+      background: linear-gradient(135deg, rgba(22,33,62,.9), rgba(26,26,46,.95));
+      border: 1px solid rgba(245,200,66,.18);
+      border-radius: 1.2rem;
+      padding: 1.8rem;
+      transition: transform .3s, box-shadow .3s, border-color .3s;
+      cursor: default;
+    }
+    .memory-card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(245,200,66,.5);
+      box-shadow: 0 20px 50px rgba(0,0,0,.4), 0 0 30px rgba(245,200,66,.08);
+    }
+    .memory-card .emoji { font-size: 2rem; margin-bottom: .8rem; display: block; }
+    .memory-card h3 {
+      font-family: 'Playfair Display', serif;
+      color: var(--cream);
+      font-size: 1.1rem;
+      margin-bottom: .5rem;
+    }
+    .memory-card p { color: rgba(253,246,227,.6); font-size: .9rem; line-height: 1.65; }
+
+    /* ── QUOTE ── */
+    .quote-section {
+      background: linear-gradient(135deg, rgba(233,69,96,.08), rgba(245,200,66,.06));
+      border-left: 4px solid var(--gold);
+      padding: 3rem 4rem;
+      border-radius: 0 1.5rem 1.5rem 0;
+      margin: 1rem 0;
+    }
+    .quote-section blockquote {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: clamp(1.3rem, 3vw, 2rem);
+      color: var(--cream);
+      line-height: 1.55;
+    }
+    .quote-section cite {
+      display: block;
+      margin-top: 1rem;
+      color: var(--gold);
+      font-style: normal;
+      font-size: .9rem;
+      letter-spacing: .1em;
+    }
+
+    /* ── TIMELINE ── */
+    .timeline {
+      position: relative;
+      padding-left: 2.5rem;
+      border-left: 2px solid rgba(245,200,66,.25);
+    }
+    .tl-item {
+      position: relative;
+      margin-bottom: 2.5rem;
+    }
+    .tl-item::before {
+      content: '';
+      position: absolute;
+      left: -2.7rem;
+      top: .35rem;
+      width: 12px; height: 12px;
+      background: var(--gold);
+      border-radius: 50%;
+      box-shadow: 0 0 12px rgba(245,200,66,.6);
+    }
+    .tl-item .tl-year {
+      font-size: .75rem;
+      color: var(--gold);
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      margin-bottom: .3rem;
+    }
+    .tl-item h4 {
+      color: var(--cream);
+      font-size: 1.05rem;
+      margin-bottom: .35rem;
+    }
+    .tl-item p { color: rgba(253,246,227,.6); font-size: .9rem; line-height: 1.6; }
+
+    /* ── NAMES CLOUD ── */
+    .names-cloud {
+      display: flex; flex-wrap: wrap;
+      gap: .75rem;
+      justify-content: center;
+    }
+    .name-chip {
+      background: rgba(245,200,66,.1);
+      border: 1px solid rgba(245,200,66,.25);
+      color: var(--gold);
+      padding: .45rem 1.1rem;
+      border-radius: 99px;
+      font-size: .88rem;
+      letter-spacing: .04em;
+      transition: background .25s, transform .25s;
+      cursor: default;
+    }
+    .name-chip:hover {
+      background: rgba(245,200,66,.22);
+      transform: scale(1.07);
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      position: relative; z-index: 1;
+      text-align: center;
+      padding: 3rem 2rem 4rem;
+      border-top: 1px solid rgba(245,200,66,.12);
+      color: rgba(253,246,227,.35);
+      font-size: .85rem;
+    }
+    footer strong { color: var(--gold); }
+
+    /* ── FLOATING HEARTS ── */
+    .heart-float {
+      position: fixed;
+      pointer-events: none; z-index: 0;
+      font-size: 1.2rem;
+      opacity: .08;
+      animation: floatUp linear infinite;
+    }
+    @keyframes floatUp {
+      from { transform: translateY(100vh) rotate(0deg); opacity: .12; }
+      to   { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+    }
+  </style>
 </head>
-
 <body>
 
+<!-- Stars background -->
+<div id="stars"></div>
+
+<!-- Floating hearts -->
+<div class="heart-float" style="left:10%;animation-duration:12s;animation-delay:0s">💛</div>
+<div class="heart-float" style="left:30%;animation-duration:15s;animation-delay:3s">⭐</div>
+<div class="heart-float" style="left:55%;animation-duration:11s;animation-delay:1s">💛</div>
+<div class="heart-float" style="left:75%;animation-duration:14s;animation-delay:5s">✨</div>
+<div class="heart-float" style="left:90%;animation-duration:10s;animation-delay:2s">💫</div>
+
+<!-- ── HERO ── -->
 <header>
-
-<h1>🎓 Turma Alda 2005</h1>
-<p>Site oficial da turma</p>
-
+  <div class="badge">✦ Turma Especial ✦</div>
+  <h1>
+    Sala ALDA
+    <em>Turma 2005</em>
+  </h1>
+  <p class="sub">Uma turma, uma história, memórias para sempre 💛</p>
+  <div class="scroll-hint">
+    <span></span>
+    scroll
+  </div>
 </header>
 
-<div class="container">
+<div class="divider"><span class="divider-icon">✦</span></div>
 
-<div class="card">
+<!-- ── SOBRE ── -->
+<section>
+  <h2 class="section-title">Sobre a Turma</h2>
+  <div class="about-grid">
+    <div class="about-text">
+      <p>A <strong>Sala ALDA de 2005</strong> é mais do que uma turma — é uma família formada entre carteiras, recreios, risadas e aprendizados que vão muito além dos livros.</p>
+      <p>Cada rosto nessa sala carregou uma história única, e juntos escrevemos um capítulo inesquecível. Professores que marcaram, amizades que duraram, e momentos que o tempo não apaga.</p>
+      <p>Esta página é o nosso espaço: para lembrar, celebrar e manter vivo o espírito da turma mais incrível de todos os tempos.</p>
+    </div>
+    <div class="year-card">
+      <div class="big-year">2005</div>
+      <p>O ano em que tudo começou ✨<br/>Sala ALDA para sempre!</p>
+    </div>
+  </div>
+</section>
 
-<h2>Mural da Turma</h2>
+<div class="divider"><span class="divider-icon">★</span></div>
 
-<input id="nome" placeholder="Seu nome">
-<input id="msg" placeholder="Mensagem">
+<!-- ── MEMÓRIAS ── -->
+<section>
+  <h2 class="section-title">Memórias da Turma</h2>
+  <div class="memories-grid">
+    <div class="memory-card">
+      <span class="emoji">📚</span>
+      <h3>As Aulas</h3>
+      <p>Aquelas aulas que pareciam durar horas, mas que hoje a gente daria qualquer coisa para reviver mais uma vez.</p>
+    </div>
+    <div class="memory-card">
+      <span class="emoji">🎉</span>
+      <h3>As Festas</h3>
+      <p>Festas juninas, formaturas, comemorações... cada evento era uma desculpa para a turma se unir e criar mais memórias.</p>
+    </div>
+    <div class="memory-card">
+      <span class="emoji">😂</span>
+      <h3>As Risadas</h3>
+      <p>As piadas internas, os apelidos, as situações que só fazem sentido pra quem estava lá. Nenhuma legenda necessária.</p>
+    </div>
+    <div class="memory-card">
+      <span class="emoji">🤝</span>
+      <h3>As Amizades</h3>
+      <p>Amizades construídas entre trabalhos em grupo e intervalos que duram até hoje — e vão durar pra sempre.</p>
+    </div>
+    <div class="memory-card">
+      <span class="emoji">🏆</span>
+      <h3>As Conquistas</h3>
+      <p>Cada nota, cada projeto, cada superação. A turma ALDA sempre deu o seu melhor e colheu frutos lindos.</p>
+    </div>
+    <div class="memory-card">
+      <span class="emoji">🌟</span>
+      <h3>Os Momentos</h3>
+      <p>Aqueles instantes que ficaram gravados na memória: o cheiro da escola, a voz dos professores, os corredores cheios de vida.</p>
+    </div>
+  </div>
+</section>
 
-<br>
+<div class="divider"><span class="divider-icon">✦</span></div>
 
-<button onclick="enviar()">Enviar</button>
+<!-- ── FRASE ── -->
+<section>
+  <div class="quote-section">
+    <blockquote>
+      "A turma perfeita não existe — mas a nossa chegou bem perto disso."
+    </blockquote>
+    <cite>— Sala ALDA, 2005</cite>
+  </div>
+</section>
 
-<div id="mural"></div>
+<div class="divider"><span class="divider-icon">★</span></div>
 
-</div>
+<!-- ── LINHA DO TEMPO ── -->
+<section>
+  <h2 class="section-title">Nossa Linha do Tempo</h2>
+  <div class="timeline">
+    <div class="tl-item">
+      <div class="tl-year">2005 — Início</div>
+      <h4>🚀 Primeiros Passos</h4>
+      <p>O começo de tudo. Rostos novos, nervosismo, e a sensação de que algo especial estava para começar.</p>
+    </div>
+    <div class="tl-item">
+      <div class="tl-year">Durante o ano</div>
+      <h4>📖 Crescimento e Aprendizado</h4>
+      <p>Meses de estudo, descobertas, amizades que foram se aprofundando e uma identidade de turma que foi tomando forma.</p>
+    </div>
+    <div class="tl-item">
+      <div class="tl-year">Final do Ano</div>
+      <h4>🎓 Formatura e Celebração</h4>
+      <p>O encerramento de um ciclo inesquecível. Lágrimas, abraços, fotos e a promessa de nunca esquecer uns aos outros.</p>
+    </div>
+    <div class="tl-item">
+      <div class="tl-year">Para Sempre</div>
+      <h4>💛 ALDA 2005 Eterna</h4>
+      <p>A turma pode ter se separado, mas a essência do que vivemos juntos permanece. Sala ALDA vive em cada um de nós.</p>
+    </div>
+  </div>
+</section>
 
-</div>
+<div class="divider"><span class="divider-icon">✦</span></div>
 
+<!-- ── NOMES ── -->
+<section style="text-align:center;">
+  <h2 class="section-title" style="display:block;text-align:center;">Nossa Turma 💛</h2>
+  <p style="color:rgba(253,246,227,.55);margin-bottom:2rem;font-size:.95rem;">Adicione os nomes da galera aqui!</p>
+  <div class="names-cloud">
+    <span class="name-chip">Ana</span>
+    <span class="name-chip">Bruno</span>
+    <span class="name-chip">Carla</span>
+    <span class="name-chip">Diego</span>
+    <span class="name-chip">Elena</span>
+    <span class="name-chip">Felipe</span>
+    <span class="name-chip">Gabriela</span>
+    <span class="name-chip">Hugo</span>
+    <span class="name-chip">Isabela</span>
+    <span class="name-chip">João</span>
+    <span class="name-chip">Karen</span>
+    <span class="name-chip">Lucas</span>
+    <span class="name-chip">Marina</span>
+    <span class="name-chip">Nicolas</span>
+    <span class="name-chip">Olivia</span>
+    <span class="name-chip">Paulo</span>
+    <span class="name-chip">Rafaela</span>
+    <span class="name-chip">Samuel</span>
+    <span class="name-chip">Tatiana</span>
+    <span class="name-chip">Vitor</span>
+    <span class="name-chip">+ Toda a Turma ✨</span>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
 <footer>
-
-<p>Feito pela Turma Alda 2005</p>
-
+  <p>Feito com 💛 para a <strong>Sala ALDA 2005</strong></p>
+  <p style="margin-top:.5rem">Uma turma inesquecível · Para sempre no coração</p>
 </footer>
 
 <script>
+  // Generate starfield
+  const starsEl = document.getElementById('stars');
+  for (let i = 0; i < 180; i++) {
+    const s = document.createElement('div');
+    s.className = 'star';
+    const size = Math.random() * 2.5 + .5;
+    s.style.cssText = `
+      width:${size}px; height:${size}px;
+      top:${Math.random()*100}%;
+      left:${Math.random()*100}%;
+      --dur:${(Math.random()*3+1.5).toFixed(1)}s;
+      animation-delay:${(Math.random()*4).toFixed(1)}s;
+    `;
+    starsEl.appendChild(s);
+  }
 
-let mural = JSON.parse(localStorage.getItem("mural") || "[]")
+  // Intersection observer for scroll animations
+  const cards = document.querySelectorAll('.memory-card, .tl-item, .year-card');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.style.opacity = '1';
+        e.target.style.transform = 'translateY(0)';
+      }
+    });
+  }, { threshold: .15 });
 
-function atualizar(){
-
-let div = document.getElementById("mural")
-div.innerHTML=""
-
-mural.slice().reverse().forEach(m => {
-
-div.innerHTML += `
-<div class="mensagem">
-<b>${m.nome}</b>: ${m.msg}
-</div>
-`
-
-})
-
-}
-
-function enviar(){
-
-let nome = document.getElementById("nome").value
-let msg = document.getElementById("msg").value
-
-if(nome=="" || msg=="") return
-
-mural.push({nome,msg})
-
-localStorage.setItem("mural",JSON.stringify(mural))
-
-document.getElementById("msg").value=""
-
-atualizar()
-
-}
-
-atualizar()
-
+  cards.forEach(c => {
+    c.style.opacity = '0';
+    c.style.transform = 'translateY(28px)';
+    c.style.transition = 'opacity .6s ease, transform .6s ease';
+    io.observe(c);
+  });
 </script>
-
 </body>
 </html>
