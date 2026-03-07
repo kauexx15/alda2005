@@ -2,74 +2,78 @@
 <html lang="pt-br">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Turma Alda 2005</title>
 
 <style>
 
 body{
-    margin:0;
-    font-family: Arial, Helvetica, sans-serif;
-    background: linear-gradient(135deg,#0f2027,#203a43,#2c5364);
-    color:white;
-    text-align:center;
+margin:0;
+font-family:Arial;
+background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+color:white;
+text-align:center;
 }
 
 header{
-    padding:60px 20px;
+padding:60px;
 }
 
 h1{
-    font-size:50px;
-    margin:0;
+font-size:50px;
+margin:0;
 }
 
 p{
-    font-size:20px;
-    opacity:0.8;
+opacity:0.8;
 }
 
 .container{
-    display:flex;
-    justify-content:center;
-    flex-wrap:wrap;
-    gap:30px;
-    padding:40px;
+max-width:700px;
+margin:auto;
+padding:20px;
 }
 
 .card{
-    background:rgba(255,255,255,0.1);
-    backdrop-filter:blur(10px);
-    padding:30px;
-    border-radius:15px;
-    width:250px;
-    transition:0.3s;
-    box-shadow:0 10px 25px rgba(0,0,0,0.3);
+background:rgba(255,255,255,0.08);
+padding:25px;
+border-radius:15px;
+margin-top:20px;
+backdrop-filter:blur(10px);
 }
 
-.card:hover{
-    transform:scale(1.08);
+input{
+width:90%;
+padding:12px;
+margin:8px;
+border:none;
+border-radius:8px;
+outline:none;
 }
 
 button{
-    margin-top:15px;
-    padding:10px 20px;
-    border:none;
-    border-radius:8px;
-    background:#00c6ff;
-    color:white;
-    font-size:16px;
-    cursor:pointer;
+padding:12px 20px;
+border:none;
+border-radius:8px;
+background:#00c6ff;
+color:white;
+font-size:16px;
+cursor:pointer;
 }
 
 button:hover{
-    background:#0072ff;
+background:#0072ff;
+}
+
+.mensagem{
+background:rgba(255,255,255,0.1);
+padding:10px;
+border-radius:10px;
+margin-top:10px;
 }
 
 footer{
-    margin-top:40px;
-    padding:20px;
-    opacity:0.6;
+margin-top:50px;
+opacity:0.6;
 }
 
 </style>
@@ -78,35 +82,78 @@ footer{
 <body>
 
 <header>
-<h1>Turma Alda 2005 🎓</h1>
+
+<h1>🎓 Turma Alda 2005</h1>
 <p>Site oficial da turma</p>
+
 </header>
 
 <div class="container">
 
 <div class="card">
-<h2>Galeria</h2>
-<p>Fotos da turma.</p>
-<button onclick="alert('Em breve!')">Abrir</button>
-</div>
 
-<div class="card">
-<h2>Alunos</h2>
-<p>Lista da galera.</p>
-<button onclick="alert('Em breve!')">Ver lista</button>
-</div>
+<h2>Mural da Turma</h2>
 
-<div class="card">
-<h2>Eventos</h2>
-<p>Eventos da turma.</p>
-<button onclick="alert('Em breve!')">Ver eventos</button>
+<input id="nome" placeholder="Seu nome">
+<input id="msg" placeholder="Mensagem">
+
+<br>
+
+<button onclick="enviar()">Enviar</button>
+
+<div id="mural"></div>
+
 </div>
 
 </div>
 
 <footer>
-<p>© 2026 Turma Alda 2005</p>
+
+<p>Feito pela Turma Alda 2005</p>
+
 </footer>
+
+<script>
+
+let mural = JSON.parse(localStorage.getItem("mural") || "[]")
+
+function atualizar(){
+
+let div = document.getElementById("mural")
+div.innerHTML=""
+
+mural.slice().reverse().forEach(m => {
+
+div.innerHTML += `
+<div class="mensagem">
+<b>${m.nome}</b>: ${m.msg}
+</div>
+`
+
+})
+
+}
+
+function enviar(){
+
+let nome = document.getElementById("nome").value
+let msg = document.getElementById("msg").value
+
+if(nome=="" || msg=="") return
+
+mural.push({nome,msg})
+
+localStorage.setItem("mural",JSON.stringify(mural))
+
+document.getElementById("msg").value=""
+
+atualizar()
+
+}
+
+atualizar()
+
+</script>
 
 </body>
 </html>
