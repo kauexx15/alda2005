@@ -169,9 +169,8 @@ textarea.field{height:85px;}
 @keyframes barFill{from{width:0;}to{width:100%;}}
 
 /* ── CUSTOM CURSOR ── */
-#cursor{position:fixed;width:12px;height:12px;border-radius:50%;background:var(--glow);pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:transform .1s,width .2s,height .2s,opacity .3s;box-shadow:0 0 12px var(--glow);mix-blend-mode:screen;}
-#cursor-ring{position:fixed;width:36px;height:36px;border-radius:50%;border:1.5px solid rgba(139,92,246,.4);pointer-events:none;z-index:9997;transform:translate(-50%,-50%);transition:left .12s ease,top .12s ease,width .2s,height .2s,border-color .2s;}
-@media(pointer:coarse){#cursor,#cursor-ring{display:none;}}
+#cursor{position:fixed;width:10px;height:10px;border-radius:50%;background:var(--glow);pointer-events:none;z-index:9998;transform:translate(-50%,-50%);box-shadow:0 0 10px var(--glow);mix-blend-mode:screen;transition:width .15s,height .15s;}
+@media(pointer:coarse){#cursor{display:none;}}
 
 /* ── SCROLL REVEAL ── */
 .reveal{opacity:0;transform:translateY(32px);transition:opacity .7s ease,transform .7s ease;}
@@ -190,14 +189,6 @@ textarea.field{height:85px;}
   animation:ripple .6s linear;
 }
 @keyframes ripple{to{transform:scale(4);opacity:0;}}
-
-/* ── MOUSE TRAIL ── */
-.trail{
-  position:fixed;border-radius:50%;
-  background:var(--glow);pointer-events:none;
-  z-index:9996;transform:translate(-50%,-50%);
-  transition:opacity .5s;
-}
 
 /* ── NAV SLIDE IN ── */
 nav{animation:navIn .6s .1s cubic-bezier(.34,1.56,.64,1) both;}
@@ -218,6 +209,34 @@ nav{animation:navIn .6s .1s cubic-bezier(.34,1.56,.64,1) both;}
 
 /* ── CARD TILT ── */
 .card{transform-style:preserve-3d;}
+
+/* ── MOBILE TOUCH ANIMATIONS ── */
+@media(pointer:coarse){
+  .card{transition:transform .2s,box-shadow .2s,border-color .2s;}
+  .card:active{transform:scale(.97)!important;box-shadow:0 2px 12px rgba(0,0,0,.4)!important;}
+  .reaction-btn:active{transform:scale(1.2)!important;}
+  .btn-pub:active,.btn-login:active,.btn-comment:active{transform:scale(.96)!important;opacity:.85;}
+  /* tap ripple feedback */
+  .tap-flash{animation:tapFlash .35s ease;}
+  @keyframes tapFlash{0%{filter:brightness(1);}50%{filter:brightness(1.3);}100%{filter:brightness(1);}}
+}
+
+/* ── MOBILE PARTICLES ── */
+#mobile-sparks{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden;}
+.mspark{
+  position:absolute;
+  width:3px;height:3px;border-radius:50%;
+  background:var(--glow);
+  opacity:0;
+  animation:msdrift var(--d) ease-in-out infinite;
+  animation-delay:var(--delay);
+}
+@keyframes msdrift{
+  0%{transform:translateY(100vh) scale(0);opacity:0;}
+  15%{opacity:var(--op);}
+  85%{opacity:var(--op);}
+  100%{transform:translateY(-8vh) translateX(var(--tx)) scale(1);opacity:0;}
+}
 
 /* ── COUNTER ── */
 .count-up{display:inline-block;}
@@ -288,9 +307,9 @@ footer strong{color:rgba(196,181,253,.5);}
 
 <!-- CUSTOM CURSOR -->
 <div id="cursor"></div>
-<div id="cursor-ring"></div>
 
 <div id="particles"></div>
+<div id="mobile-sparks"></div>
 <div class="aurora"></div>
 <div class="grid-lines"></div>
 
@@ -655,46 +674,36 @@ window.addEventListener('load',()=>{
   },2200);
 });
 
-// ── CUSTOM CURSOR ──
-const cur=document.getElementById('cursor');
-const ring=document.getElementById('cursor-ring');
-let mx=0,my=0,rx=0,ry=0;
-document.addEventListener('mousemove',e=>{
-  mx=e.clientX;my=e.clientY;
-  cur.style.left=mx+'px';cur.style.top=my+'px';
-  spawnTrail(mx,my);
-});
-// ring follows with lag
-function animRing(){
-  rx+=(mx-rx)*.12;ry+=(my-ry)*.12;
-  ring.style.left=rx+'px';ring.style.top=ry+'px';
-  requestAnimationFrame(animRing);
-}animRing();
-
-document.querySelectorAll('a,button,label,.card,.reaction-btn').forEach(el=>{
-  el.addEventListener('mouseenter',()=>{
-    cur.style.width='18px';cur.style.height='18px';
-    ring.style.width='52px';ring.style.height='52px';
-    ring.style.borderColor='rgba(139,92,246,.7)';
+// ── CUSTOM CURSOR (desktop only) ──
+if(window.matchMedia('(pointer:fine)').matches){
+  const cur=document.getElementById('cursor');
+  document.addEventListener('mousemove',e=>{
+    cur.style.left=e.clientX+'px';
+    cur.style.top=e.clientY+'px';
   });
-  el.addEventListener('mouseleave',()=>{
-    cur.style.width='12px';cur.style.height='12px';
-    ring.style.width='36px';ring.style.height='36px';
-    ring.style.borderColor='rgba(139,92,246,.4)';
+  document.querySelectorAll('a,button,label,.card,.reaction-btn').forEach(el=>{
+    el.addEventListener('mouseenter',()=>{cur.style.width='18px';cur.style.height='18px';});
+    el.addEventListener('mouseleave',()=>{cur.style.width='10px';cur.style.height='10px';});
   });
-});
+}
 
-// ── MOUSE TRAIL ──
-const trails=[];
-function spawnTrail(x,y){
-  const t=document.createElement('div');
-  t.className='trail';
-  const size=Math.random()*6+3;
-  t.style.cssText=`left:${x}px;top:${y}px;width:${size}px;height:${size}px;opacity:${Math.random()*.4+.1};`;
-  document.body.appendChild(t);
-  trails.push(t);
-  setTimeout(()=>{t.style.opacity='0';setTimeout(()=>t.remove(),500);},80);
-  if(trails.length>30){const old=trails.shift();old.remove();}
+// ── MOBILE SPARKS ──
+if(window.matchMedia('(pointer:coarse)').matches){
+  const ms=document.getElementById('mobile-sparks');
+  for(let i=0;i<40;i++){
+    const p=document.createElement('div');p.className='mspark';
+    p.style.cssText=`left:${Math.random()*100}%;--d:${(Math.random()*14+8).toFixed(1)}s;--delay:${(Math.random()*12).toFixed(1)}s;--tx:${(Math.random()*80-40).toFixed(0)}px;--op:${(Math.random()*.5+.15).toFixed(2)};`;
+    ms.appendChild(p);
+  }
+  // touch ripple on cards
+  document.addEventListener('touchstart',e=>{
+    const card=e.target.closest('.card');
+    if(card)card.classList.add('tap-flash');
+  });
+  document.addEventListener('touchend',e=>{
+    const card=e.target.closest('.card');
+    if(card)setTimeout(()=>card.classList.remove('tap-flash'),350);
+  });
 }
 
 // ── RIPPLE on buttons ──
@@ -980,21 +989,25 @@ async function sendMsg(){
   try{
     const res = await fetch('https://api.anthropic.com/v1/messages',{
       method:'POST',
-      headers:{'Content-Type':'application/json'},
+      headers:{
+        'Content-Type':'application/json',
+        'anthropic-version':'2023-06-01',
+        'anthropic-dangerous-allow-browser':'true'
+      },
       body: JSON.stringify({
-        model: 'claude-sonnet-4-20250514',
-        max_tokens: 1000,
+        model: 'claude-haiku-4-5-20251001',
+        max_tokens: 800,
         system: 'Você é o Assistente da Turma 2005 da Escola ALDA. Responda em português brasileiro de forma simpática, direta e útil. Pode ajudar com qualquer dúvida — matérias escolares, curiosidades, conselhos do dia a dia, o que for. Seja amigável como se fosse da turma. Respostas curtas e objetivas, sem enrolação.',
         messages: chatHistory.filter(m=>m.role==='user'||m.role==='assistant').slice(-10)
       })
     });
     const data = await res.json();
     removeTyping();
-    const reply = data.content?.[0]?.text || 'Desculpa, não consegui responder. Tenta de novo!';
+    const reply = data.content?.[0]?.text || 'Não consegui responder agora, tenta de novo!';
     addAiMsg(reply);
   } catch(e){
     removeTyping();
-    addAiMsg('Ops, deu um erro aqui. Tenta de novo em instantes!');
+    addAiMsg('Não consegui responder agora. Verifique sua conexão e tente de novo!');
     console.error(e);
   }
   send.disabled = false;
