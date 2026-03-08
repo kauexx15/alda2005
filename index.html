@@ -127,6 +127,25 @@ footer{position:relative;z-index:1;background:var(--bg);border-top:1px solid var
 footer strong{color:rgba(196,181,253,.5);}
 
 @media(max-width:600px){.nav-links{display:none;}#feed{columns:1;}.compose-row{flex-direction:column;align-items:stretch;}.btn-pub{margin-left:0;}.hero-book{display:none;}}
+
+/* LOGIN MODAL */
+#login-modal{display:none;position:fixed;inset:0;z-index:999;background:rgba(5,3,12,.92);backdrop-filter:blur(16px);align-items:center;justify-content:center;}
+#login-modal.on{display:flex;}
+.login-box{background:var(--card);border:1px solid var(--border);border-radius:22px;padding:2.5rem 2rem;width:100%;max-width:360px;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.5),0 0 40px rgba(109,40,217,.15);animation:lbIn .3s ease;}
+.login-box h2{font-family:'Playfair Display',serif;font-size:1.6rem;color:var(--bright);margin-bottom:.4rem;}
+.login-box p{color:var(--muted);font-size:.88rem;margin-bottom:1.5rem;}
+.login-box .field{text-align:left;margin-bottom:1rem;}
+.login-err{color:#f87171;font-size:.82rem;margin-bottom:.8rem;min-height:1.2rem;}
+.btn-login{width:100%;background:linear-gradient(135deg,var(--purple2),var(--glow));color:white;border:none;border-radius:99px;padding:.7rem;font-family:'Quicksand',sans-serif;font-size:.95rem;font-weight:700;cursor:pointer;box-shadow:0 4px 20px rgba(109,40,217,.4);transition:transform .2s,box-shadow .2s;}
+.btn-login:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(109,40,217,.55);}
+.btn-cancel{background:none;border:none;color:var(--muted);font-size:.82rem;cursor:pointer;margin-top:.8rem;text-decoration:underline;font-family:'Quicksand',sans-serif;}
+.btn-cancel:hover{color:var(--bright);}
+
+/* NAV LOGIN BTN */
+.nav-login-btn{display:inline-flex;align-items:center;gap:.4rem;background:rgba(139,92,246,.1);border:1px solid rgba(139,92,246,.25);border-radius:99px;padding:.35rem .9rem;cursor:pointer;font-size:.78rem;font-weight:700;color:var(--accent);margin-left:.5rem;transition:background .2s;font-family:'Quicksand',sans-serif;}
+.nav-login-btn:hover{background:rgba(139,92,246,.2);}
+.nav-login-btn.logged{color:#86efac;border-color:rgba(134,239,172,.3);background:rgba(134,239,172,.08);}
+.nav-login-btn.logged:hover{background:rgba(134,239,172,.15);}
 </style>
 </head>
 <body>
@@ -140,8 +159,21 @@ footer strong{color:rgba(196,181,253,.5);}
   <div class="nav-links">
     <a href="#blog">Blog</a>
     <a href="#sobre">Sobre</a>
+    <button class="nav-login-btn" id="nav-login-btn" onclick="toggleLogin()">Entrar</button>
   </div>
 </nav>
+
+<!-- LOGIN MODAL -->
+<div id="login-modal">
+  <div class="login-box">
+    <h2>Área da Turma</h2>
+    <p>Digite a senha para postar e apagar fotos</p>
+    <input class="field" id="senha-input" type="password" placeholder="Senha..." onkeydown="if(event.key==='Enter')tryLogin()"/>
+    <div class="login-err" id="login-err"></div>
+    <button class="btn-login" onclick="tryLogin()">Entrar</button>
+    <br/><button class="btn-cancel" onclick="closeLoginModal()">Cancelar</button>
+  </div>
+</div>
 
 <div class="hero">
   <div class="hero-orb"></div>
@@ -168,7 +200,7 @@ footer strong{color:rgba(196,181,253,.5);}
 
   <div class="divider"><div class="dline"></div><div class="dlabel">Novo post</div><div class="dline"></div></div>
 
-  <div class="compose">
+  <div class="compose" id="compose-area" style="display:none;">
     <p class="compose-hint">O que rolou hoje?</p>
     <input class="field" id="f-author" type="text" placeholder="Seu nome" maxlength="40"/>
     <textarea class="field" id="f-text" placeholder="Conta pra turma..."></textarea>
@@ -201,10 +233,55 @@ const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZ
 const BUCKET = 'fotos';
 // ══════════════════════════════════════════
 
+const SENHA = 'feijaocomarroz';
+let logado = sessionStorage.getItem('alda_auth') === '1';
+
+function updateLoginUI(){
+  const btn = document.getElementById('nav-login-btn');
+  const compose = document.getElementById('compose-area');
+  if(logado){
+    btn.textContent = 'Sair';
+    btn.classList.add('logged');
+    compose.style.display = 'block';
+  } else {
+    btn.textContent = 'Entrar';
+    btn.classList.remove('logged');
+    compose.style.display = 'none';
+  }
+}
+
+function toggleLogin(){
+  if(logado){ logado=false; sessionStorage.removeItem('alda_auth'); updateLoginUI(); toast('Saiu da conta!'); }
+  else { document.getElementById('login-modal').classList.add('on'); document.getElementById('senha-input').focus(); }
+}
+
+function tryLogin(){
+  const val = document.getElementById('senha-input').value;
+  if(val === SENHA){
+    logado = true;
+    sessionStorage.setItem('alda_auth','1');
+    document.getElementById('login-modal').classList.remove('on');
+    document.getElementById('senha-input').value = '';
+    document.getElementById('login-err').textContent = '';
+    updateLoginUI();
+    toast('Bem-vinda, turma!');
+  } else {
+    document.getElementById('login-err').textContent = 'Senha incorreta, tenta de novo!';
+    document.getElementById('senha-input').value = '';
+    document.getElementById('senha-input').focus();
+  }
+}
+
+function closeLoginModal(){
+  document.getElementById('login-modal').classList.remove('on');
+  document.getElementById('senha-input').value = '';
+  document.getElementById('login-err').textContent = '';
+}
+
+updateLoginUI();
+
 const configured = !SUPABASE_URL.includes('COLE_AQUI');
 if(configured) document.getElementById('config-banner').style.display='none';
-
-// API helpers
 const headers = {'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}`, 'Content-Type': 'application/json', 'Prefer': 'return=representation'};
 
 async function dbGet(table, query='') {
@@ -258,6 +335,7 @@ document.getElementById('f-photos').addEventListener('change',function(){
 
 async function addPost(){
   if(!configured){ toast('Configure o Supabase primeiro!'); return; }
+  if(!logado){ toast('Faça login primeiro!'); return; }
   const author=document.getElementById('f-author').value.trim()||'Anônimo';
   const text=document.getElementById('f-text').value.trim();
   if(!text&&!pendingFiles.length){document.getElementById('f-text').focus();return;}
@@ -351,7 +429,7 @@ function renderPosts(posts,photosByPost){
         ${extra}
         <div class="card-foot">
           <span class="chip">#turma2005</span>
-          <button class="del" onclick="delPost(${p.id})">apagar</button>
+          ${logado ? `<button class="del" onclick="delPost(${p.id})">apagar</button>` : ''}
         </div>
       </div>`;
     feed.appendChild(card);
