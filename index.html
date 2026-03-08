@@ -128,7 +128,101 @@ textarea.field{height:85px;}
 .btn-comment{background:linear-gradient(135deg,var(--purple2),var(--glow));color:white;border:none;border-radius:99px;padding:.4rem .9rem;font-family:'Quicksand',sans-serif;font-size:.78rem;font-weight:700;cursor:pointer;transition:transform .15s,box-shadow .15s;white-space:nowrap;}
 .btn-comment:hover{transform:translateY(-1px);box-shadow:0 4px 14px rgba(109,40,217,.4);}
 
-/* CARD FOOTER */
+/* ── INTRO SCREEN ── */
+#intro{
+  position:fixed;inset:0;z-index:9999;
+  background:var(--bg);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  pointer-events:none;
+}
+#intro.hide{animation:introOut .8s cubic-bezier(.76,0,.24,1) forwards;}
+@keyframes introOut{
+  0%{opacity:1;transform:scale(1);}
+  60%{opacity:1;transform:scale(1.04);}
+  100%{opacity:0;transform:scale(1.1);pointer-events:none;}
+}
+.intro-logo{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(2rem,8vw,5rem);
+  font-weight:700;
+  background:linear-gradient(135deg,var(--accent),var(--bright));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  opacity:0;animation:introLogo 1s .2s cubic-bezier(.34,1.56,.64,1) forwards;
+}
+@keyframes introLogo{from{opacity:0;transform:translateY(30px) scale(.9);}to{opacity:1;transform:translateY(0) scale(1);}}
+.intro-sub{
+  font-family:'Caveat',cursive;font-size:1.3rem;color:var(--muted);
+  margin-top:.6rem;
+  opacity:0;animation:introLogo .8s .6s ease forwards;
+}
+.intro-bar{
+  width:160px;height:3px;border-radius:99px;
+  background:rgba(139,92,246,.15);
+  margin-top:2rem;overflow:hidden;
+  opacity:0;animation:introLogo .5s .9s ease forwards;
+}
+.intro-bar-fill{
+  height:100%;width:0;border-radius:99px;
+  background:linear-gradient(90deg,var(--purple2),var(--bright));
+  animation:barFill 1.2s 1s cubic-bezier(.4,0,.2,1) forwards;
+}
+@keyframes barFill{from{width:0;}to{width:100%;}}
+
+/* ── CUSTOM CURSOR ── */
+#cursor{position:fixed;width:12px;height:12px;border-radius:50%;background:var(--glow);pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:transform .1s,width .2s,height .2s,opacity .3s;box-shadow:0 0 12px var(--glow);mix-blend-mode:screen;}
+#cursor-ring{position:fixed;width:36px;height:36px;border-radius:50%;border:1.5px solid rgba(139,92,246,.4);pointer-events:none;z-index:9997;transform:translate(-50%,-50%);transition:left .12s ease,top .12s ease,width .2s,height .2s,border-color .2s;}
+@media(pointer:coarse){#cursor,#cursor-ring{display:none;}}
+
+/* ── SCROLL REVEAL ── */
+.reveal{opacity:0;transform:translateY(32px);transition:opacity .7s ease,transform .7s ease;}
+.reveal.visible{opacity:1;transform:translateY(0);}
+.reveal-left{opacity:0;transform:translateX(-32px);transition:opacity .7s ease,transform .7s ease;}
+.reveal-left.visible{opacity:1;transform:translateX(0);}
+.reveal-scale{opacity:0;transform:scale(.94);transition:opacity .6s ease,transform .6s ease;}
+.reveal-scale.visible{opacity:1;transform:scale(1);}
+
+/* ── RIPPLE ── */
+.ripple-wrap{position:relative;overflow:hidden;}
+.ripple-effect{
+  position:absolute;border-radius:50%;
+  background:rgba(255,255,255,.25);
+  transform:scale(0);pointer-events:none;
+  animation:ripple .6s linear;
+}
+@keyframes ripple{to{transform:scale(4);opacity:0;}}
+
+/* ── MOUSE TRAIL ── */
+.trail{
+  position:fixed;border-radius:50%;
+  background:var(--glow);pointer-events:none;
+  z-index:9996;transform:translate(-50%,-50%);
+  transition:opacity .5s;
+}
+
+/* ── NAV SLIDE IN ── */
+nav{animation:navIn .6s .1s cubic-bezier(.34,1.56,.64,1) both;}
+@keyframes navIn{from{opacity:0;transform:translateY(-100%);}to{opacity:1;transform:translateY(0);}}
+
+/* ── GLITCH TITLE ── */
+.glitch{position:relative;}
+.glitch::before,.glitch::after{
+  content:attr(data-text);
+  position:absolute;inset:0;
+  -webkit-text-stroke:inherit;
+  background:inherit;-webkit-background-clip:text;background-clip:text;
+}
+.glitch::before{animation:glitch1 4s infinite;clip-path:polygon(0 20%,100% 20%,100% 40%,0 40%);}
+.glitch::after{animation:glitch2 4s infinite;clip-path:polygon(0 60%,100% 60%,100% 80%,0 80%);}
+@keyframes glitch1{0%,90%,100%{transform:translate(0);}92%{transform:translate(-3px,1px);}94%{transform:translate(3px,-1px);}96%{transform:translate(-2px,2px);}}
+@keyframes glitch2{0%,90%,100%{transform:translate(0);}91%{transform:translate(3px,1px);}93%{transform:translate(-3px,-1px);}95%{transform:translate(2px,2px);}}
+
+/* ── CARD TILT ── */
+.card{transform-style:preserve-3d;}
+
+/* ── COUNTER ── */
+.count-up{display:inline-block;}
+
+
 .card-foot{display:flex;align-items:center;justify-content:space-between;padding-top:.5rem;}
 .chip{font-size:.67rem;font-weight:700;letter-spacing:.05em;background:rgba(139,92,246,.12);color:var(--accent);padding:.2rem .58rem;border-radius:99px;border:1px solid rgba(139,92,246,.2);}
 .del{background:none;border:none;cursor:pointer;font-size:.72rem;color:rgba(196,181,253,.2);transition:color .2s;padding:.1rem .3rem;border-radius:6px;font-family:'Quicksand',sans-serif;}
@@ -185,6 +279,17 @@ footer strong{color:rgba(196,181,253,.5);}
 </head>
 <body>
 
+<!-- INTRO SCREEN -->
+<div id="intro">
+  <div class="intro-logo">Escola ALDA</div>
+  <div class="intro-sub">Turma 2005 · Nosso Diário</div>
+  <div class="intro-bar"><div class="intro-bar-fill"></div></div>
+</div>
+
+<!-- CUSTOM CURSOR -->
+<div id="cursor"></div>
+<div id="cursor-ring"></div>
+
 <div id="particles"></div>
 <div class="aurora"></div>
 <div class="grid-lines"></div>
@@ -213,7 +318,7 @@ footer strong{color:rgba(196,181,253,.5);}
 <div class="hero">
   <div class="hero-orb"></div>
   <div class="hero-tag"><span class="blink"></span>Escola ALDA · Turma 2005</div>
-  <h1>Nosso<span>Diário</span><em>da Turma</em></h1>
+  <h1 class="glitch" data-text="Nosso">Nosso<span>Diário</span><em>da Turma</em></h1>
   <p class="hero-sub">Poste fotos, conte histórias, guarde memórias.</p>
   <div class="hero-book">📚</div>
   <div class="scroll-cue"><div class="scroll-line"></div>scroll</div>
@@ -225,8 +330,8 @@ footer strong{color:rgba(196,181,253,.5);}
     <div><h3>Configure o Supabase</h3><p>Substitua SUPABASE_URL e SUPABASE_KEY no script.</p></div>
   </div>
 
-  <div class="divider"><div class="dline"></div><div class="dlabel">Novo post</div><div class="dline"></div></div>
-  <div class="compose" id="compose-area" style="display:none;">
+  <div class="divider reveal"><div class="dline"></div><div class="dlabel">Novo post</div><div class="dline"></div></div>
+  <div class="compose reveal" id="compose-area" style="display:none;">
     <p class="compose-hint">O que rolou hoje?</p>
     <input class="field" id="f-author" type="text" placeholder="Seu nome" maxlength="40"/>
     <textarea class="field" id="f-text" placeholder="Conta pra turma..."></textarea>
@@ -540,6 +645,125 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape')closeLb();});
 
 loadPosts();
 setInterval(loadPosts,30000);
+
+// ── INTRO ──
+window.addEventListener('load',()=>{
+  setTimeout(()=>{
+    const intro=document.getElementById('intro');
+    intro.classList.add('hide');
+    setTimeout(()=>intro.remove(),900);
+  },2200);
+});
+
+// ── CUSTOM CURSOR ──
+const cur=document.getElementById('cursor');
+const ring=document.getElementById('cursor-ring');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{
+  mx=e.clientX;my=e.clientY;
+  cur.style.left=mx+'px';cur.style.top=my+'px';
+  spawnTrail(mx,my);
+});
+// ring follows with lag
+function animRing(){
+  rx+=(mx-rx)*.12;ry+=(my-ry)*.12;
+  ring.style.left=rx+'px';ring.style.top=ry+'px';
+  requestAnimationFrame(animRing);
+}animRing();
+
+document.querySelectorAll('a,button,label,.card,.reaction-btn').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{
+    cur.style.width='18px';cur.style.height='18px';
+    ring.style.width='52px';ring.style.height='52px';
+    ring.style.borderColor='rgba(139,92,246,.7)';
+  });
+  el.addEventListener('mouseleave',()=>{
+    cur.style.width='12px';cur.style.height='12px';
+    ring.style.width='36px';ring.style.height='36px';
+    ring.style.borderColor='rgba(139,92,246,.4)';
+  });
+});
+
+// ── MOUSE TRAIL ──
+const trails=[];
+function spawnTrail(x,y){
+  const t=document.createElement('div');
+  t.className='trail';
+  const size=Math.random()*6+3;
+  t.style.cssText=`left:${x}px;top:${y}px;width:${size}px;height:${size}px;opacity:${Math.random()*.4+.1};`;
+  document.body.appendChild(t);
+  trails.push(t);
+  setTimeout(()=>{t.style.opacity='0';setTimeout(()=>t.remove(),500);},80);
+  if(trails.length>30){const old=trails.shift();old.remove();}
+}
+
+// ── RIPPLE on buttons ──
+document.addEventListener('click',e=>{
+  const btn=e.target.closest('button,.btn-pub,.btn-login,.btn-comment,.reaction-btn');
+  if(!btn)return;
+  btn.classList.add('ripple-wrap');
+  const r=document.createElement('span');
+  r.className='ripple-effect';
+  const rect=btn.getBoundingClientRect();
+  const size=Math.max(rect.width,rect.height)*2;
+  r.style.cssText=`width:${size}px;height:${size}px;left:${e.clientX-rect.left-size/2}px;top:${e.clientY-rect.top-size/2}px;`;
+  btn.appendChild(r);
+  setTimeout(()=>r.remove(),600);
+});
+
+// ── SCROLL REVEAL ──
+const revealObserver=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      e.target.classList.add('visible');
+      // stagger children if section
+      e.target.querySelectorAll('.card').forEach((c,i)=>{
+        c.style.transitionDelay=(i*.08)+'s';
+        c.classList.add('visible');
+      });
+    }
+  });
+},{threshold:.1});
+
+function observeReveal(){
+  document.querySelectorAll('.reveal,.reveal-left,.reveal-scale').forEach(el=>revealObserver.observe(el));
+}
+observeReveal();
+
+// ── 3D CARD TILT ──
+document.addEventListener('mousemove',e=>{
+  document.querySelectorAll('.card').forEach(card=>{
+    const rect=card.getBoundingClientRect();
+    if(e.clientX<rect.left-60||e.clientX>rect.right+60||e.clientY<rect.top-60||e.clientY>rect.bottom+60){
+      card.style.transform='';return;
+    }
+    const cx=rect.left+rect.width/2;
+    const cy=rect.top+rect.height/2;
+    const dx=(e.clientX-cx)/(rect.width/2);
+    const dy=(e.clientY-cy)/(rect.height/2);
+    card.style.transform=`perspective(600px) rotateY(${dx*6}deg) rotateX(${-dy*6}deg) translateY(-4px)`;
+  });
+});
+document.addEventListener('mouseleave',()=>{
+  document.querySelectorAll('.card').forEach(c=>c.style.transform='');
+});
+
+// ── PAGE TRANSITION on nav links ──
+document.querySelectorAll('nav a').forEach(a=>{
+  a.addEventListener('click',e=>{
+    const href=a.getAttribute('href');
+    if(!href||href.startsWith('#'))return;
+    e.preventDefault();
+    document.body.style.transition='opacity .3s';
+    document.body.style.opacity='0';
+    setTimeout(()=>window.location=href,300);
+  });
+});
+window.addEventListener('pageshow',()=>{
+  document.body.style.transition='opacity .4s';
+  document.body.style.opacity='1';
+});
+
 </script>
 
 <!-- ══ ASSISTENTE IA ══ -->
