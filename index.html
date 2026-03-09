@@ -977,6 +977,10 @@ function removeTyping(){
   if(t) t.remove();
 }
 
+// ══ URL DO SEU SERVIDOR NO RENDER ══
+const AI_SERVER = 'https://alda-assistente.onrender.com';
+// ════════════════════════════════════
+
 async function sendMsg(){
   const input = document.getElementById('ai-input');
   const send = document.getElementById('ai-send');
@@ -987,17 +991,10 @@ async function sendMsg(){
   addUserMsg(text);
   showTyping();
   try{
-    const res = await fetch('https://api.anthropic.com/v1/messages',{
+    const res = await fetch(`${AI_SERVER}/chat`,{
       method:'POST',
-      headers:{
-        'Content-Type':'application/json',
-        'anthropic-version':'2023-06-01',
-        'anthropic-dangerous-allow-browser':'true'
-      },
+      headers:{'Content-Type':'application/json'},
       body: JSON.stringify({
-        model: 'claude-haiku-4-5-20251001',
-        max_tokens: 800,
-        system: 'Você é o Assistente da Turma 2005 da Escola ALDA. Responda em português brasileiro de forma simpática, direta e útil. Pode ajudar com qualquer dúvida — matérias escolares, curiosidades, conselhos do dia a dia, o que for. Seja amigável como se fosse da turma. Respostas curtas e objetivas, sem enrolação.',
         messages: chatHistory.filter(m=>m.role==='user'||m.role==='assistant').slice(-10)
       })
     });
@@ -1007,7 +1004,7 @@ async function sendMsg(){
     addAiMsg(reply);
   } catch(e){
     removeTyping();
-    addAiMsg('Não consegui responder agora. Verifique sua conexão e tente de novo!');
+    addAiMsg('Não consegui responder agora. Verifique sua conexão!');
     console.error(e);
   }
   send.disabled = false;
