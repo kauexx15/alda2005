@@ -1,131 +1,186 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-<meta charset="UTF-8">
-<title>Feliz Aniversário ❤️</title>
-
 <style>
-body {
-    margin: 0;
-    height: 100vh;
-    background: #f8b6b6;
-    overflow: hidden;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-family: 'Segoe Script', cursive;
-}
-
-/* CONFETES */
-.confete {
-    position: absolute;
-    width: 8px;
-    height: 8px;
-    background: white;
-    opacity: 0.8;
-    animation: cair linear infinite;
-}
-
-@keyframes cair {
-    0% { transform: translateY(-10px) rotate(0deg); }
-    100% { transform: translateY(110vh) rotate(360deg); }
+/* ── ÁREA ANIVERSÁRIO ── */
+.birthday-wrapper{
+  position:relative;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  padding:5rem 1rem;
+  z-index:2;
 }
 
 /* BOLO */
-.bolo {
-    position: relative;
-    width: 200px;
-    height: 120px;
-    background: #6b3e26;
-    border-radius: 10px;
+.cake{
+  position:relative;
+  width:180px;
+  height:100px;
+  background:#6b3e26;
+  border-radius:14px;
+  box-shadow:0 15px 40px rgba(0,0,0,.5);
 }
 
-.cobertura {
-    position: absolute;
-    top: -20px;
-    width: 100%;
-    height: 40px;
-    background: white;
-    border-radius: 10px;
+.cake::before{
+  content:'';
+  position:absolute;
+  top:-20px;
+  width:100%;
+  height:40px;
+  background:white;
+  border-radius:14px;
 }
 
-.vela {
-    position: absolute;
-    top: -80px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 10px;
-    height: 60px;
-    background: white;
+/* GOTEJOS */
+.drip{position:absolute;top:-10px;width:20px;height:30px;background:white;border-radius:10px;}
+.drip:nth-child(1){left:25px;}
+.drip:nth-child(2){left:80px;height:35px;}
+.drip:nth-child(3){left:130px;}
+
+/* FOTO NO BOLO */
+.cake img{
+  position:absolute;
+  width:80px;
+  height:80px;
+  object-fit:cover;
+  border-radius:10px;
+  left:50%;
+  top:50%;
+  transform:translate(-50%,-40%);
+  border:3px solid white;
 }
 
-.chama {
-    position: absolute;
-    top: -15px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 12px;
-    height: 18px;
-    background: gold;
-    border-radius: 50%;
-    animation: fogo 0.5s infinite alternate;
+/* VELA */
+.candle{
+  position:absolute;
+  top:-75px;
+  left:50%;
+  transform:translateX(-50%);
+  width:10px;
+  height:60px;
+  background:white;
 }
 
-@keyframes fogo {
-    from { transform: translateX(-50%) scale(1); }
-    to { transform: translateX(-50%) scale(1.2); }
+.flame{
+  position:absolute;
+  top:-18px;
+  left:50%;
+  transform:translateX(-50%);
+  width:14px;
+  height:20px;
+  background:gold;
+  border-radius:50%;
+  animation:flame .5s infinite alternate;
+  box-shadow:0 0 15px gold;
 }
+@keyframes flame{from{transform:translateX(-50%) scale(1);}to{transform:translateX(-50%) scale(1.25);}}
 
 /* TEXTO */
-.texto {
-    position: absolute;
-    bottom: 80px;
-    font-size: 32px;
-    color: #7a2d4f;
+.birthday-text{
+  margin-top:2rem;
+  font-family:'Playfair Display',serif;
+  font-size:2.2rem;
+  color:#c4b5fd;
+  text-align:center;
+  animation:fadeUp 1s ease;
+}
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;}}
+
+/* BALÕES */
+.balloon{
+  position:fixed;
+  bottom:-100px;
+  width:30px;
+  height:40px;
+  border-radius:50%;
+  background:linear-gradient(135deg,#a78bfa,#7c3aed);
+  animation:floatUp linear infinite;
+}
+@keyframes floatUp{
+  0%{transform:translateY(0);}
+  100%{transform:translateY(-120vh);}
 }
 
-/* CORAÇÃO */
-.coracao {
-    position: absolute;
-    right: 40px;
-    bottom: 40px;
-    font-size: 40px;
-    animation: bater 1s infinite;
+/* CONFETE */
+.confetti{
+  position:fixed;
+  width:6px;
+  height:6px;
+  background:white;
+  top:-10px;
+  animation:fall linear forwards;
+}
+@keyframes fall{
+  to{transform:translateY(110vh) rotate(360deg);}
 }
 
-@keyframes bater {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.2); }
-    100% { transform: scale(1); }
+/* BOTÃO SURPRESA */
+.surprise-btn{
+  margin-top:2rem;
+  padding:.7rem 1.6rem;
+  border-radius:99px;
+  border:none;
+  background:linear-gradient(135deg,#7c3aed,#c4b5fd);
+  color:white;
+  font-weight:700;
+  cursor:pointer;
+  box-shadow:0 6px 25px rgba(109,40,217,.6);
 }
-
 </style>
-</head>
 
-<body>
+<div class="birthday-wrapper">
+  
+  <div class="cake">
+    <div class="drip"></div>
+    <div class="drip"></div>
+    <div class="drip"></div>
 
-<div class="bolo">
-    <div class="cobertura"></div>
-    <div class="vela">
-        <div class="chama"></div>
+    <!-- FOTO AQUI -->
+    <img src="https://i.imgur.com/yourimage.jpg" id="cakePhoto">
+
+    <div class="candle">
+      <div class="flame"></div>
     </div>
+  </div>
+
+  <div class="birthday-text">
+    Happy Birthday my Love ❤️
+  </div>
+
+  <button class="surprise-btn" onclick="surpresa()">Clique para surpresa 🎉</button>
+
 </div>
 
-<div class="texto">Happy Birthday my Love!</div>
-<div class="coracao">❤️</div>
+<!-- MÚSICA -->
+<audio id="music" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"></audio>
 
 <script>
-// GERAR CONFETES
-for (let i = 0; i < 50; i++) {
-    let c = document.createElement("div");
-    c.classList.add("confete");
-
-    c.style.left = Math.random() * 100 + "vw";
-    c.style.animationDuration = (Math.random() * 3 + 2) + "s";
-
-    document.body.appendChild(c);
+// 🎈 BALÕES
+for(let i=0;i<15;i++){
+  let b=document.createElement('div');
+  b.className='balloon';
+  b.style.left=Math.random()*100+'vw';
+  b.style.animationDuration=(Math.random()*5+5)+'s';
+  document.body.appendChild(b);
 }
-</script>
 
-</body>
-</html>
+// 🎉 CONFETE
+function confete(){
+  for(let i=0;i<60;i++){
+    let c=document.createElement('div');
+    c.className='confetti';
+    c.style.left=Math.random()*100+'vw';
+    c.style.animationDuration=(Math.random()*3+2)+'s';
+    document.body.appendChild(c);
+    setTimeout(()=>c.remove(),4000);
+  }
+}
+
+// 🎁 SURPRESA
+function surpresa(){
+  confete();
+  document.getElementById('music').play();
+}
+
+// 💥 CLICK GLOBAL
+document.addEventListener('click',confete);
+</script>
