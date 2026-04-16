@@ -1,241 +1,129 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
 <meta charset="UTF-8">
-<title>🎉 Aniversário 🎂</title>
+<title>Feliz Aniversário ❤️</title>
 
 <style>
 body {
-  margin: 0;
-  background: radial-gradient(circle at top, #ff7eb3, #ff758c);
-  font-family: 'Segoe UI', sans-serif;
-  text-align: center;
-  color: white;
-  overflow: hidden;
+    margin: 0;
+    height: 100vh;
+    background: #f8b6b6;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Segoe Script', cursive;
 }
 
-/* TÍTULO */
-h1 {
-  margin-top: 20px;
-  font-size: 3em;
-  animation: fade 2s;
+/* CONFETES */
+.confete {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background: white;
+    opacity: 0.8;
+    animation: cair linear infinite;
 }
 
-/* FOTO PRINCIPAL */
-.top-img {
-  width: 140px;
-  border-radius: 50%;
-  border: 4px solid white;
-  box-shadow: 0 0 25px rgba(255,255,255,0.8);
-  animation: float 3s infinite ease-in-out;
+@keyframes cair {
+    0% { transform: translateY(-10px) rotate(0deg); }
+    100% { transform: translateY(110vh) rotate(360deg); }
 }
 
 /* BOLO */
-.cake {
-  position: relative;
-  width: 230px;
-  margin: 50px auto;
+.bolo {
+    position: relative;
+    width: 200px;
+    height: 120px;
+    background: #6b3e26;
+    border-radius: 10px;
 }
 
-.layer {
-  height: 50px;
-  border-radius: 15px;
+.cobertura {
+    position: absolute;
+    top: -20px;
+    width: 100%;
+    height: 40px;
+    background: white;
+    border-radius: 10px;
 }
 
-.l1 { background: #6b3e26; }
-.l2 { background: #8b5a2b; }
-.l3 { background: #c97c3c; }
-
-.icing {
-  height: 25px;
-  background: #fff0f5;
-  border-radius: 15px;
-  margin-top: -10px;
+.vela {
+    position: absolute;
+    top: -80px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 10px;
+    height: 60px;
+    background: white;
 }
 
-/* FOTO NO BOLO */
-.cake img {
-  width: 90px;
-  height: 90px;
-  border-radius: 50%;
-  position: absolute;
-  top: 40px;
-  left: 70px;
-  border: 3px solid white;
+.chama {
+    position: absolute;
+    top: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 12px;
+    height: 18px;
+    background: gold;
+    border-radius: 50%;
+    animation: fogo 0.5s infinite alternate;
 }
 
-/* VELA */
-.candle {
-  width: 10px;
-  height: 50px;
-  background: gold;
-  position: absolute;
-  top: -60px;
-  left: 110px;
-  cursor: pointer;
-}
-
-.flame {
-  width: 18px;
-  height: 18px;
-  background: radial-gradient(circle, yellow, orange, red);
-  border-radius: 50%;
-  position: absolute;
-  top: -18px;
-  left: -4px;
-  animation: flame 0.2s infinite alternate;
-}
-
-@keyframes flame {
-  to { transform: scale(1.3); }
-}
-
-/* BOTÃO */
-button {
-  padding: 12px 25px;
-  border-radius: 20px;
-  border: none;
-  background: white;
-  color: #ff4e50;
-  font-size: 1em;
-  cursor: pointer;
+@keyframes fogo {
+    from { transform: translateX(-50%) scale(1); }
+    to { transform: translateX(-50%) scale(1.2); }
 }
 
 /* TEXTO */
-#msg {
-  width: 80%;
-  margin: auto;
-  margin-top: 20px;
-  font-size: 1.3em;
-  min-height: 40px;
+.texto {
+    position: absolute;
+    bottom: 80px;
+    font-size: 32px;
+    color: #7a2d4f;
 }
 
-/* BALÕES */
-.balloon {
-  position: absolute;
-  bottom: -120px;
-  width: 50px;
-  height: 70px;
-  border-radius: 50%;
-  animation: subir 8s linear infinite;
+/* CORAÇÃO */
+.coracao {
+    position: absolute;
+    right: 40px;
+    bottom: 40px;
+    font-size: 40px;
+    animation: bater 1s infinite;
 }
 
-.string {
-  width: 2px;
-  height: 40px;
-  background: white;
-  margin: auto;
+@keyframes bater {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); }
 }
 
-@keyframes subir {
-  to { transform: translateY(-130vh); }
-}
-
-/* FOGOS */
-.firework {
-  position: absolute;
-  width: 5px;
-  height: 5px;
-  background: white;
-  border-radius: 50%;
-  animation: explode 1s ease-out forwards;
-}
-
-@keyframes explode {
-  to {
-    transform: translate(var(--x), var(--y));
-    opacity: 0;
-  }
-}
-
-/* ANIMAÇÕES */
-@keyframes float {
-  50% { transform: translateY(-10px); }
-}
-
-@keyframes fade {
-  from { opacity: 0; }
-}
 </style>
 </head>
 
 <body>
 
-<h1>🎉 Feliz Aniversário! 🎂</h1>
-
-<img class="top-img" src="SUA_FOTO_AQUI.jpg">
-
-<div class="cake">
-  <div class="layer l1"></div>
-  <div class="layer l2"></div>
-  <div class="layer l3"></div>
-  <div class="icing"></div>
-
-  <img src="SUA_FOTO_AQUI.jpg">
-
-  <div class="candle" onclick="apagarVela()">
-    <div class="flame" id="flame"></div>
-  </div>
+<div class="bolo">
+    <div class="cobertura"></div>
+    <div class="vela">
+        <div class="chama"></div>
+    </div>
 </div>
 
-<button onclick="mensagem()">Abrir surpresa 🎁</button>
-<div id="msg"></div>
-
-<audio id="musica" loop>
-  <source src="https://www.myinstants.com/media/sounds/happy-birthday.mp3">
-</audio>
+<div class="texto">Happy Birthday my Love!</div>
+<div class="coracao">❤️</div>
 
 <script>
-/* DIGITANDO */
-function mensagem() {
-  let texto = "Feliz aniversário meu irmão! 🎉🔥 Que tua vida seja só vitória, saúde e dinheiro! 💸";
-  let i = 0;
-  let el = document.getElementById("msg");
-  el.innerHTML = "";
-  document.getElementById("musica").play();
+// GERAR CONFETES
+for (let i = 0; i < 50; i++) {
+    let c = document.createElement("div");
+    c.classList.add("confete");
 
-  let interval = setInterval(() => {
-    el.innerHTML += texto[i];
-    i++;
-    if (i >= texto.length) {
-      clearInterval(interval);
-      fogos();
-    }
-  }, 40);
-}
+    c.style.left = Math.random() * 100 + "vw";
+    c.style.animationDuration = (Math.random() * 3 + 2) + "s";
 
-/* APAGAR VELA */
-function apagarVela() {
-  document.getElementById("flame").style.display = "none";
-}
-
-/* BALÕES */
-setInterval(() => {
-  let b = document.createElement("div");
-  b.className = "balloon";
-  b.style.left = Math.random()*100 + "vw";
-  b.style.background = "hsl("+Math.random()*360+",70%,60%)";
-
-  let corda = document.createElement("div");
-  corda.className = "string";
-  b.appendChild(corda);
-
-  document.body.appendChild(b);
-  setTimeout(() => b.remove(), 8000);
-}, 500);
-
-/* FOGOS */
-function fogos() {
-  for (let i=0; i<50; i++) {
-    let f = document.createElement("div");
-    f.className = "firework";
-    f.style.left = "50%";
-    f.style.top = "50%";
-    f.style.setProperty('--x', (Math.random()*300-150)+'px');
-    f.style.setProperty('--y', (Math.random()*300-150)+'px');
-    document.body.appendChild(f);
-    setTimeout(() => f.remove(), 1000);
-  }
+    document.body.appendChild(c);
 }
 </script>
 
