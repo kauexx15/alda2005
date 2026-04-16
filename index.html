@@ -8,235 +8,168 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Quicksand:wght@400;600&family=Caveat&display=swap" rel="stylesheet">
 
 <style>
-:root{
-  --bg:#0d0a1a;
-  --card:#1a1430;
-  --purple:#7c3aed;
-  --glow:#8b5cf6;
-  --text:#f5f3ff;
-}
-
-*{margin:0;padding:0;box-sizing:border-box;}
-
 body{
-  font-family:'Quicksand',sans-serif;
-  background:var(--bg);
-  color:var(--text);
-  overflow-x:hidden;
-}
-
-/* BACKGROUND EFFECT */
-body::before{
-  content:'';
-  position:fixed;
-  inset:0;
-  background:radial-gradient(circle at 20% 20%,rgba(139,92,246,.2),transparent 60%),
-             radial-gradient(circle at 80% 80%,rgba(109,40,217,.2),transparent 60%);
-  z-index:0;
+  margin:0;
+  font-family:'Quicksand';
+  background:#0d0a1a;
+  color:white;
 }
 
 /* HERO */
 .hero{
-  position:relative;
-  z-index:1;
   text-align:center;
-  padding:7rem 2rem;
+  padding:6rem 2rem;
 }
-
 .hero h1{
+  font-size:4rem;
   font-family:'Playfair Display';
-  font-size:clamp(3rem,10vw,6rem);
 }
-
-.hero span{
-  color:transparent;
-  -webkit-text-stroke:1px #a78bfa;
-}
-
-.hero em{
-  display:block;
-  font-style:italic;
-  background:linear-gradient(45deg,#a78bfa,#c4b5fd);
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
-}
-
-.hero p{
-  margin-top:1rem;
-  font-family:'Caveat';
-  font-size:1.5rem;
-  color:#aaa;
-}
-
-/* BOLO */
-.cake{
-  margin-top:2rem;
-  animation:float 3s ease-in-out infinite;
-}
+.hero span{color:#a78bfa;}
+.hero p{font-family:'Caveat';font-size:1.5rem;color:#aaa;}
 
 .cake img{
-  width:200px;
+  width:180px;
   border-radius:20px;
-  box-shadow:0 0 40px var(--glow);
+  margin-top:1rem;
+  box-shadow:0 0 30px #8b5cf6;
 }
 
-@keyframes float{
-  0%,100%{transform:translateY(0);}
-  50%{transform:translateY(-15px);}
-}
-
-/* BALÕES */
-#balloons{
-  position:fixed;
-  inset:0;
-  pointer-events:none;
-}
-
-@keyframes subir{
-  from{transform:translateY(0);}
-  to{transform:translateY(-120vh);}
-}
-
-/* MENSAGENS */
-.container{
-  max-width:900px;
+/* POSTS */
+.box{
+  max-width:700px;
   margin:auto;
-  padding:2rem;
-  position:relative;
-  z-index:1;
-}
-
-.card{
-  background:var(--card);
-  padding:1.5rem;
-  border-radius:20px;
-  margin-bottom:1rem;
-  border:1px solid rgba(139,92,246,.2);
-  animation:fade .5s ease;
-}
-
-@keyframes fade{
-  from{opacity:0;transform:translateY(20px);}
-  to{opacity:1;transform:translateY(0);}
+  padding:1rem;
 }
 
 input,textarea{
   width:100%;
-  margin:.5rem 0;
-  padding:.7rem;
+  padding:.6rem;
+  margin:.4rem 0;
   border-radius:10px;
   border:none;
-  outline:none;
-  background:#120e22;
-  color:white;
 }
 
 button{
-  background:linear-gradient(135deg,#7c3aed,#8b5cf6);
-  border:none;
-  padding:.6rem 1.5rem;
-  border-radius:999px;
+  background:#7c3aed;
   color:white;
+  border:none;
+  padding:.6rem 1.2rem;
+  border-radius:999px;
   cursor:pointer;
-  box-shadow:0 0 20px rgba(139,92,246,.4);
 }
 
-/* PARTICLES */
-#particles{
-  position:fixed;
-  inset:0;
-  z-index:0;
-}
-
-.p{
-  position:absolute;
-  width:3px;
-  height:3px;
-  background:#8b5cf6;
-  border-radius:50%;
-  animation:up linear infinite;
-}
-
-@keyframes up{
-  from{transform:translateY(100vh);}
-  to{transform:translateY(-10vh);}
+.post{
+  background:#1a1430;
+  padding:1rem;
+  border-radius:15px;
+  margin-top:.8rem;
 }
 </style>
 </head>
 
 <body>
 
-<div id="particles"></div>
-<div id="balloons"></div>
-
-<!-- HERO -->
 <div class="hero">
-  <h1>Feliz <span>Aniversário</span><em>Kaue 🎂</em></h1>
-  <p>Hoje é seu dia! Aproveita cada momento ✨</p>
+  <h1>Feliz <span>Aniversário</span> 🎂</h1>
+  <p>Hoje é seu dia! 💜</p>
 
   <div class="cake">
     <img src="https://i.imgur.com/4M34hi2.png">
   </div>
 </div>
 
-<!-- MENSAGENS -->
-<div class="container">
+<div class="box">
+  <h2>Deixe uma mensagem 🎉</h2>
 
-  <div class="card">
-    <h3>Deixe uma mensagem 🎉</h3>
-    <input id="nome" placeholder="Seu nome">
-    <textarea id="msg" placeholder="Escreva algo..."></textarea>
-    <button onclick="add()">Enviar</button>
-  </div>
+  <input id="nome" placeholder="Seu nome">
+  <textarea id="msg" placeholder="Mensagem..."></textarea>
+  <input type="file" id="foto">
+
+  <button onclick="enviar()">Enviar</button>
 
   <div id="feed"></div>
-
 </div>
 
-<!-- MUSICA -->
-<audio autoplay loop>
-  <source src="https://www.myinstants.com/media/sounds/happy-birthday.mp3">
-</audio>
-
 <script>
+// 🔥 COLOCA SUAS CHAVES AQUI
+const SUPABASE_URL = "COLE_AQUI";
+const SUPABASE_KEY = "COLE_AQUI";
 
-/* PARTICULAS */
-const pC = document.getElementById("particles");
-for(let i=0;i<60;i++){
-  const p=document.createElement("div");
-  p.className="p";
-  p.style.left=Math.random()*100+"%";
-  p.style.animationDuration=(Math.random()*10+5)+"s";
-  pC.appendChild(p);
+// HEADERS
+const H = {
+  apikey: SUPABASE_KEY,
+  Authorization: "Bearer " + SUPABASE_KEY,
+  "Content-Type":"application/json"
+};
+
+// POST
+async function enviar(){
+  const nome = document.getElementById("nome").value || "Anônimo";
+  const texto = document.getElementById("msg").value;
+
+  if(!texto) return;
+
+  const res = await fetch(`${SUPABASE_URL}/rest/v1/posts`,{
+    method:"POST",
+    headers:H,
+    body: JSON.stringify({author:nome,text:texto})
+  });
+
+  const post = (await res.json())[0];
+
+  // upload foto
+  const file = document.getElementById("foto").files[0];
+  if(file){
+    const path = Date.now()+".png";
+
+    await fetch(`${SUPABASE_URL}/storage/v1/object/fotos/${path}`,{
+      method:"POST",
+      headers:{
+        apikey:SUPABASE_KEY,
+        Authorization:"Bearer "+SUPABASE_KEY
+      },
+      body:file
+    });
+
+    const url = `${SUPABASE_URL}/storage/v1/object/public/fotos/${path}`;
+
+    await fetch(`${SUPABASE_URL}/rest/v1/photos`,{
+      method:"POST",
+      headers:H,
+      body: JSON.stringify({post_id:post.id,url})
+    });
+  }
+
+  load();
 }
 
-/* BALÕES */
-const b = document.getElementById("balloons");
-for(let i=0;i<25;i++){
-  const el=document.createElement("div");
-  el.innerHTML="🎈";
-  el.style.position="absolute";
-  el.style.left=Math.random()*100+"%";
-  el.style.bottom="-50px";
-  el.style.fontSize=(Math.random()*20+20)+"px";
-  el.style.animation=`subir ${Math.random()*6+6}s linear infinite`;
-  b.appendChild(el);
+// LOAD
+async function load(){
+  const posts = await fetch(`${SUPABASE_URL}/rest/v1/posts?select=*`)
+  .then(r=>r.json());
+
+  const photos = await fetch(`${SUPABASE_URL}/rest/v1/photos`)
+  .then(r=>r.json());
+
+  const feed = document.getElementById("feed");
+  feed.innerHTML = "";
+
+  posts.reverse().forEach(p=>{
+    const img = photos.find(f=>f.post_id===p.id);
+
+    const div = document.createElement("div");
+    div.className="post";
+    div.innerHTML = `
+      <strong>${p.author}</strong>
+      <p>${p.text}</p>
+      ${img?`<img src="${img.url}" style="width:100%;border-radius:10px;">`:''}
+    `;
+
+    feed.appendChild(div);
+  });
 }
 
-/* MENSAGENS */
-function add(){
-  const nome=document.getElementById("nome").value || "Anônimo";
-  const msg=document.getElementById("msg").value;
-  if(!msg) return;
-
-  const card=document.createElement("div");
-  card.className="card";
-  card.innerHTML=`<strong>${nome}</strong><p>${msg}</p>`;
-
-  document.getElementById("feed").prepend(card);
-  document.getElementById("msg").value="";
-}
-
+load();
 </script>
 
 </body>
