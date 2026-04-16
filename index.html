@@ -1,186 +1,181 @@
 <style>
-/* ── ÁREA ANIVERSÁRIO ── */
-.birthday-wrapper{
-  position:relative;
+/* ── ÁREA ── */
+.bday{
   display:flex;
   flex-direction:column;
   align-items:center;
   justify-content:center;
-  padding:5rem 1rem;
-  z-index:2;
+  padding:6rem 1rem;
+  text-align:center;
 }
 
-/* BOLO */
-.cake{
+/* TEXTO */
+.bday h2{
+  font-family:'Playfair Display',serif;
+  font-size:2.4rem;
+  color:#c4b5fd;
+  margin-top:2rem;
+  letter-spacing:.5px;
+}
+
+/* BOLO REALISTA CLEAN */
+.cake-box{
   position:relative;
-  width:180px;
-  height:100px;
-  background:#6b3e26;
-  border-radius:14px;
-  box-shadow:0 15px 40px rgba(0,0,0,.5);
+  width:160px;
+  height:120px;
 }
 
-.cake::before{
-  content:'';
+/* BASE */
+.cake-base{
   position:absolute;
-  top:-20px;
+  bottom:0;
   width:100%;
-  height:40px;
-  background:white;
-  border-radius:14px;
+  height:70px;
+  background:linear-gradient(#5a3523,#3d2316);
+  border-radius:12px;
+  box-shadow:0 12px 35px rgba(0,0,0,.45);
 }
 
-/* GOTEJOS */
-.drip{position:absolute;top:-10px;width:20px;height:30px;background:white;border-radius:10px;}
-.drip:nth-child(1){left:25px;}
-.drip:nth-child(2){left:80px;height:35px;}
-.drip:nth-child(3){left:130px;}
-
-/* FOTO NO BOLO */
-.cake img{
+/* CAMADA */
+.cake-layer{
   position:absolute;
-  width:80px;
-  height:80px;
-  object-fit:cover;
+  bottom:55px;
+  width:100%;
+  height:30px;
+  background:#7a4a2d;
   border-radius:10px;
-  left:50%;
-  top:50%;
-  transform:translate(-50%,-40%);
-  border:3px solid white;
 }
+
+/* COBERTURA */
+.cake-top{
+  position:absolute;
+  bottom:70px;
+  width:100%;
+  height:35px;
+  background:#fff;
+  border-radius:12px;
+}
+
+/* GOTEJOS MAIS NATURAIS */
+.drip{
+  position:absolute;
+  top:0;
+  width:14px;
+  background:white;
+  border-radius:10px;
+}
+.d1{left:20px;height:18px;}
+.d2{left:50px;height:26px;}
+.d3{left:80px;height:20px;}
+.d4{left:110px;height:24px;}
 
 /* VELA */
 .candle{
   position:absolute;
-  top:-75px;
+  bottom:105px;
   left:50%;
   transform:translateX(-50%);
-  width:10px;
-  height:60px;
+  width:8px;
+  height:45px;
   background:white;
+  border-radius:2px;
 }
 
+/* CHAMA BONITA */
 .flame{
   position:absolute;
-  top:-18px;
+  top:-16px;
   left:50%;
   transform:translateX(-50%);
-  width:14px;
-  height:20px;
-  background:gold;
-  border-radius:50%;
-  animation:flame .5s infinite alternate;
-  box-shadow:0 0 15px gold;
-}
-@keyframes flame{from{transform:translateX(-50%) scale(1);}to{transform:translateX(-50%) scale(1.25);}}
-
-/* TEXTO */
-.birthday-text{
-  margin-top:2rem;
-  font-family:'Playfair Display',serif;
-  font-size:2.2rem;
-  color:#c4b5fd;
-  text-align:center;
-  animation:fadeUp 1s ease;
-}
-@keyframes fadeUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;}}
-
-/* BALÕES */
-.balloon{
-  position:fixed;
-  bottom:-100px;
-  width:30px;
-  height:40px;
-  border-radius:50%;
-  background:linear-gradient(135deg,#a78bfa,#7c3aed);
-  animation:floatUp linear infinite;
-}
-@keyframes floatUp{
-  0%{transform:translateY(0);}
-  100%{transform:translateY(-120vh);}
+  width:12px;
+  height:16px;
+  background:radial-gradient(circle,#ffd54d,#ff9800);
+  border-radius:50% 50% 50% 50%;
+  animation:flame 0.4s infinite alternate;
+  box-shadow:0 0 12px #ffcc00;
 }
 
-/* CONFETE */
+@keyframes flame{
+  from{transform:translateX(-50%) scale(1);}
+  to{transform:translateX(-50%) scale(1.25);}
+}
+
+/* CONFETE SUAVE IGUAL IMAGEM */
 .confetti{
   position:fixed;
   width:6px;
   height:6px;
-  background:white;
-  top:-10px;
-  animation:fall linear forwards;
-}
-@keyframes fall{
-  to{transform:translateY(110vh) rotate(360deg);}
+  background:#fbcfe8;
+  border-radius:2px;
+  animation:fall linear infinite;
 }
 
-/* BOTÃO SURPRESA */
-.surprise-btn{
-  margin-top:2rem;
-  padding:.7rem 1.6rem;
-  border-radius:99px;
-  border:none;
+@keyframes fall{
+  0%{transform:translateY(-10vh) rotate(0);}
+  100%{transform:translateY(110vh) rotate(360deg);}
+}
+
+/* BOTÃO */
+.bday-btn{
+  margin-top:1.8rem;
   background:linear-gradient(135deg,#7c3aed,#c4b5fd);
+  border:none;
+  padding:.7rem 1.6rem;
+  border-radius:999px;
   color:white;
   font-weight:700;
   cursor:pointer;
-  box-shadow:0 6px 25px rgba(109,40,217,.6);
+  box-shadow:0 6px 25px rgba(109,40,217,.5);
+  transition:.2s;
 }
+.bday-btn:hover{transform:scale(1.07);}
 </style>
 
-<div class="birthday-wrapper">
-  
-  <div class="cake">
-    <div class="drip"></div>
-    <div class="drip"></div>
-    <div class="drip"></div>
+<div class="bday">
 
-    <!-- FOTO AQUI -->
-    <img src="https://i.imgur.com/yourimage.jpg" id="cakePhoto">
+  <div class="cake-box">
+    <div class="cake-base"></div>
+    <div class="cake-layer"></div>
+
+    <div class="cake-top">
+      <div class="drip d1"></div>
+      <div class="drip d2"></div>
+      <div class="drip d3"></div>
+      <div class="drip d4"></div>
+    </div>
 
     <div class="candle">
       <div class="flame"></div>
     </div>
   </div>
 
-  <div class="birthday-text">
-    Happy Birthday my Love ❤️
-  </div>
+  <h2>Happy Birthday my Love ❤️</h2>
 
-  <button class="surprise-btn" onclick="surpresa()">Clique para surpresa 🎉</button>
+  <button class="bday-btn" onclick="startBday()">Ativar 🎉</button>
 
 </div>
 
-<!-- MÚSICA -->
-<audio id="music" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"></audio>
+<audio id="bdayMusic" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3"></audio>
 
 <script>
-// 🎈 BALÕES
-for(let i=0;i<15;i++){
-  let b=document.createElement('div');
-  b.className='balloon';
-  b.style.left=Math.random()*100+'vw';
-  b.style.animationDuration=(Math.random()*5+5)+'s';
-  document.body.appendChild(b);
-}
-
-// 🎉 CONFETE
-function confete(){
-  for(let i=0;i<60;i++){
+// CONFETE IGUAL O DA IMAGEM (leve e bonito)
+function spawnConfetti(){
+  for(let i=0;i<40;i++){
     let c=document.createElement('div');
     c.className='confetti';
     c.style.left=Math.random()*100+'vw';
-    c.style.animationDuration=(Math.random()*3+2)+'s';
+    c.style.animationDuration=(Math.random()*3+3)+'s';
     document.body.appendChild(c);
-    setTimeout(()=>c.remove(),4000);
+    setTimeout(()=>c.remove(),6000);
   }
 }
 
-// 🎁 SURPRESA
-function surpresa(){
-  confete();
-  document.getElementById('music').play();
+// BOTÃO
+function startBday(){
+  spawnConfetti();
+  document.getElementById('bdayMusic').play();
 }
 
-// 💥 CLICK GLOBAL
-document.addEventListener('click',confete);
+// LOOP SUAVE
+setInterval(spawnConfetti,4000);
 </script>
