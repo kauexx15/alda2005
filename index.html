@@ -1,176 +1,81 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Feliz Aniversário 🎂</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Quicksand:wght@400;600&family=Caveat&display=swap" rel="stylesheet">
-
+<title>ESZ</title>
 <style>
-body{
-  margin:0;
-  font-family:'Quicksand';
-  background:#0d0a1a;
-  color:white;
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  overflow: hidden;
+  background: #020617;
 }
-
-/* HERO */
-.hero{
-  text-align:center;
-  padding:6rem 2rem;
-}
-.hero h1{
-  font-size:4rem;
-  font-family:'Playfair Display';
-}
-.hero span{color:#a78bfa;}
-.hero p{font-family:'Caveat';font-size:1.5rem;color:#aaa;}
-
-.cake img{
-  width:180px;
-  border-radius:20px;
-  margin-top:1rem;
-  box-shadow:0 0 30px #8b5cf6;
-}
-
-/* POSTS */
-.box{
-  max-width:700px;
-  margin:auto;
-  padding:1rem;
-}
-
-input,textarea{
-  width:100%;
-  padding:.6rem;
-  margin:.4rem 0;
-  border-radius:10px;
-  border:none;
-}
-
-button{
-  background:#7c3aed;
-  color:white;
-  border:none;
-  padding:.6rem 1.2rem;
-  border-radius:999px;
-  cursor:pointer;
-}
-
-.post{
-  background:#1a1430;
-  padding:1rem;
-  border-radius:15px;
-  margin-top:.8rem;
+canvas {
+  display: block;
+  width: 100vw;
+  height: 100vh;
 }
 </style>
 </head>
-
 <body>
-
-<div class="hero">
-  <h1>Feliz <span>Aniversário</span> 🎂</h1>
-  <p>Hoje é seu dia! 💜</p>
-
-  <div class="cake">
-    <img src="https://i.imgur.com/4M34hi2.png">
-  </div>
-</div>
-
-<div class="box">
-  <h2>Deixe uma mensagem 🎉</h2>
-
-  <input id="nome" placeholder="Seu nome">
-  <textarea id="msg" placeholder="Mensagem..."></textarea>
-  <input type="file" id="foto">
-
-  <button onclick="enviar()">Enviar</button>
-
-  <div id="feed"></div>
-</div>
-
+<canvas id="canvas"></canvas>
 <script>
-// 🔥 COLOCA SUAS CHAVES AQUI
-const SUPABASE_URL = "COLE_AQUI";
-const SUPABASE_KEY = "COLE_AQUI";
+const canvas = document.getElementById("canvas")
+const ctx = canvas.getContext("2d")
 
-// HEADERS
-const H = {
-  apikey: SUPABASE_KEY,
-  Authorization: "Bearer " + SUPABASE_KEY,
-  "Content-Type":"application/json"
-};
+const text = "I love you"
+let objects = []
 
-// POST
-async function enviar(){
-  const nome = document.getElementById("nome").value || "Anônimo";
-  const texto = document.getElementById("msg").value;
+function resize() {
+  canvas.width = window.innerWidth
+  canvas.height = window.innerHeight
+}
 
-  if(!texto) return;
+resize()
 
-  const res = await fetch(`${SUPABASE_URL}/rest/v1/posts`,{
-    method:"POST",
-    headers:H,
-    body: JSON.stringify({author:nome,text:texto})
-  });
+for (let i = 0; i < 100; i++) {
+  objects.push({ t: i * (Math.PI * 2 / 100) })
+}
 
-  const post = (await res.json())[0];
+function heart(t) {
+  const minDim = Math.min(canvas.width, canvas.height)
+  const scale = minDim * 0.035
 
-  // upload foto
-  const file = document.getElementById("foto").files[0];
-  if(file){
-    const path = Date.now()+".png";
+  const x = 16 * Math.pow(Math.sin(t), 3)
+  const y = (13 * Math.cos(t))
+           - (5 * Math.cos(2 * t))
+           - (2 * Math.cos(3 * t))
+           - (Math.cos(4 * t))
 
-    await fetch(`${SUPABASE_URL}/storage/v1/object/fotos/${path}`,{
-      method:"POST",
-      headers:{
-        apikey:SUPABASE_KEY,
-        Authorization:"Bearer "+SUPABASE_KEY
-      },
-      body:file
-    });
+  return {
+    x: canvas.width / 2 + x * scale,
+    y: canvas.height / 2 - y * scale
+  }
+}
 
-    const url = `${SUPABASE_URL}/storage/v1/object/public/fotos/${path}`;
+function animate() {
+  ctx.fillStyle = "#011735"
+  ctx.fillRect(0, 0, canvas.width, canvas.height)
 
-    await fetch(`${SUPABASE_URL}/rest/v1/photos`,{
-      method:"POST",
-      headers:H,
-      body: JSON.stringify({post_id:post.id,url})
-    });
+  const fontSize = Math.max(10, Math.min(canvas.width, canvas.height) * 0.025)
+
+  for (let obj of objects) {
+    obj.t += 0.0028
+    const pos = heart(obj.t)
+
+    ctx.fillStyle = "#ff4d6d"
+    ctx.font = `bold ${fontSize}px Georgia`
+    ctx.textAlign = "center"
+    ctx.textBaseline = "middle"
+    ctx.fillText(text, pos.x, pos.y)
   }
 
-  load();
+  requestAnimationFrame(animate)
 }
 
-// LOAD
-async function load(){
-  const posts = await fetch(`${SUPABASE_URL}/rest/v1/posts?select=*`)
-  .then(r=>r.json());
+window.addEventListener("resize", resize)
 
-  const photos = await fetch(`${SUPABASE_URL}/rest/v1/photos`)
-  .then(r=>r.json());
-
-  const feed = document.getElementById("feed");
-  feed.innerHTML = "";
-
-  posts.reverse().forEach(p=>{
-    const img = photos.find(f=>f.post_id===p.id);
-
-    const div = document.createElement("div");
-    div.className="post";
-    div.innerHTML = `
-      <strong>${p.author}</strong>
-      <p>${p.text}</p>
-      ${img?`<img src="${img.url}" style="width:100%;border-radius:10px;">`:''}
-    `;
-
-    feed.appendChild(div);
-  });
-}
-
-load();
+animate()
 </script>
-
 </body>
 </html>
